@@ -4,19 +4,20 @@ package com.azizulhakim.todotogether;
  * Created by AZIZUL on 9/18/2016.
  */
 import android.app.ProgressDialog;
-import android.support.annotation.VisibleForTesting;
 import android.support.v7.app.AppCompatActivity;
+
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class BaseActivity extends AppCompatActivity {
 
-    @VisibleForTesting
-    public ProgressDialog mProgressDialog;
+    private ProgressDialog mProgressDialog;
 
     public void showProgressDialog() {
         if (mProgressDialog == null) {
             mProgressDialog = new ProgressDialog(this);
-            mProgressDialog.setMessage(getString(R.string.loading));
-            mProgressDialog.setIndeterminate(true);
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setMessage("Loading...");
         }
 
         mProgressDialog.show();
@@ -27,6 +28,11 @@ public class BaseActivity extends AppCompatActivity {
             mProgressDialog.dismiss();
         }
     }
+
+    public String getUid() {
+        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+    }
+
 
     @Override
     public void onStop() {
