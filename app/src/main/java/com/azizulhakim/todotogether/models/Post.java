@@ -1,72 +1,47 @@
-/*
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.azizulhakim.todotogether.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.HashMap;
+import java.util.Map;
+
+// [START post_class]
+@IgnoreExtraProperties
 public class Post {
-    private Author author;
-    private String full_url;
-    private String thumb_storage_uri;
-    private String thumb_url;
-    private String text;
-    private Object timestamp;
-    private String full_storage_uri;
+
+    public String uid;
+    public String author;
+    public String title;
+    public String body;
+    public int starCount = 0;
+    public Map<String, Boolean> stars = new HashMap<>();
 
     public Post() {
-        // empty default constructor, necessary for Firebase to be able to deserialize blog posts
+        // Default constructor required for calls to DataSnapshot.getValue(Post.class)
     }
 
-    public Post(Author author, String full_url, String full_storage_uri, String thumb_url, String thumb_storage_uri, String text, Object timestamp) {
+    public Post(String uid, String author, String title, String body) {
+        this.uid = uid;
         this.author = author;
-        this.full_url = full_url;
-        this.text = text;
-        this.timestamp = timestamp;
-        this.thumb_storage_uri = thumb_storage_uri;
-        this.thumb_url = thumb_url;
-        this.full_storage_uri = full_storage_uri;
+        this.title = title;
+        this.body = body;
     }
 
-    public Author getAuthor() {
-        return author;
-    }
+    // [START post_to_map]
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", uid);
+        result.put("author", author);
+        result.put("title", title);
+        result.put("body", body);
+        result.put("starCount", starCount);
+        result.put("stars", stars);
 
-    public String getFull_url() {
-        return full_url;
+        return result;
     }
+    // [END post_to_map]
 
-    public String getText() {
-        return text;
-    }
-
-    public Object getTimestamp() {
-        return timestamp;
-    }
-
-    public String getThumb_storage_uri() {
-        return thumb_storage_uri;
-    }
-
-    @JsonProperty("thumb_url")
-    public String getThumb_url() {
-        return thumb_url;
-    }
-
-    public String getFull_storage_uri() {
-        return full_storage_uri;
-    }
 }
+// [END post_class]

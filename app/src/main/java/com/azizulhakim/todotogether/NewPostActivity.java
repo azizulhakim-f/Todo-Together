@@ -1,261 +1,141 @@
-/*
- * Copyright 2016 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
 package com.azizulhakim.todotogether;
 
-import android.Manifest;
-import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.provider.MediaStore;
-import android.support.annotation.NonNull;
-import android.support.v4.app.FragmentManager;
+import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.azizulhakim.todotogether.models.Post;
+import com.azizulhakim.todotogether.models.User;
+//import com.google.firebase.quickstart.database.models.Post;
+//import com.google.firebase.quickstart.database.models.User;
 
-import pub.devrel.easypermissions.AfterPermissionGranted;
-import pub.devrel.easypermissions.EasyPermissions;
+import java.util.HashMap;
+import java.util.Map;
 
+public class NewPostActivity extends BaseActivity {
 
-public class NewPostActivity extends BaseActivity implements
-        EasyPermissions.PermissionCallbacks,
-        NewPostUploadTaskFragment.TaskCallbacks {
-    public static final String TAG = "NewPostActivity";
-    public static final String TAG_TASK_FRAGMENT = "newPostUploadTaskFragment";
-    private static final int THUMBNAIL_MAX_DIMENSION = 640;
-    private static final int FULL_SIZE_MAX_DIMENSION = 1280;
-    private Button mSubmitButton;
+    private static final String TAG = "NewPostActivity";
+    private static final String REQUIRED = "Required";
 
-    private ImageView mImageView;
-    private Uri mFileUri;
-    private Bitmap mResizedBitmap;
-    private Bitmap mThumbnail;
+    // [START declare_database_ref]
+    private DatabaseReference mDatabase;
+    // [END declare_database_ref]
 
-    private NewPostUploadTaskFragment mTaskFragment;
-
-    private static final int TC_PICK_IMAGE = 101;
-    private static final int RC_CAMERA_PERMISSIONS = 102;
-
-    private static final String[] cameraPerms = new String[]{
-            Manifest.permission.READ_EXTERNAL_STORAGE
-    };
-
+    private EditText mTitleField;
+    private EditText mBodyField;
+    private FloatingActionButton mSubmitButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_post);
 
-        // find the retained fragment on activity restarts
-        FragmentManager fm = getSupportFragmentManager();
-        mTaskFragment = (NewPostUploadTaskFragment) fm.findFragmentByTag(TAG_TASK_FRAGMENT);
+        // [START initialize_database_ref]
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        // [END initialize_database_ref]
 
-        // create the fragment and data the first time
-        if (mTaskFragment == null) {
-            // add the fragment
-            mTaskFragment = new NewPostUploadTaskFragment();
-            fm.beginTransaction().add(mTaskFragment, TAG_TASK_FRAGMENT).commit();
-        }
+        mTitleField = (EditText) findViewById(R.id.field_title);
+        mBodyField = (EditText) findViewById(R.id.field_body);
+        mSubmitButton = (FloatingActionButton) findViewById(R.id.fab_submit_post);
 
-        mImageView = (ImageView) findViewById(R.id.new_post_picture);
-
-        mImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showImagePicker();
-            }
-        });
-        Bitmap selectedBitmap = mTaskFragment.getSelectedBitmap();
-        Bitmap thumbnail = mTaskFragment.getThumbnail();
-        if (selectedBitmap != null) {
-            mImageView.setImageBitmap(selectedBitmap);
-            mResizedBitmap = selectedBitmap;
-        }
-        if (thumbnail != null) {
-            mThumbnail = thumbnail;
-        }
-        final EditText descriptionText = (EditText) findViewById(R.id.new_post_text);
-
-        mSubmitButton = (Button) findViewById(R.id.new_post_submit);
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(final View v) {
-                if (mResizedBitmap == null) {
-                    Toast.makeText(NewPostActivity.this, "Select an image first.",
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                String postText = descriptionText.getText().toString();
-                if (TextUtils.isEmpty(postText)) {
-                    descriptionText.setError(getString(R.string.error_required_field));
-                    return;
-                }
-                showProgressDialog(getString(R.string.post_upload_progress_message));
-                mSubmitButton.setEnabled(false);
-
-                Long timestamp = System.currentTimeMillis();
-
-                String bitmapPath = "/" + FirebaseUtil.getCurrentUserId() + "/full/" + timestamp.toString() + "/";
-                String thumbnailPath = "/" + FirebaseUtil.getCurrentUserId() + "/thumb/" + timestamp.toString() + "/";
-                mTaskFragment.uploadPost(mResizedBitmap, bitmapPath, mThumbnail, thumbnailPath, mFileUri.getLastPathSegment(),
-                        postText);
+            public void onClick(View v) {
+                submitPost();
             }
         });
     }
 
-    @Override
-    public void onPostUploaded(final String error) {
-        NewPostActivity.this.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mSubmitButton.setEnabled(true);
-                dismissProgressDialog();
-                if (error == null) {
-                    Toast.makeText(NewPostActivity.this, "Post created!", Toast.LENGTH_SHORT).show();
-                    finish();
-                } else {
-                    Toast.makeText(NewPostActivity.this, error, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-    }
+    private void submitPost() {
+        final String title = mTitleField.getText().toString();
+        final String body = mBodyField.getText().toString();
 
-    @AfterPermissionGranted(RC_CAMERA_PERMISSIONS)
-    private void showImagePicker() {
-        // Check for camera permissions
-        if (!EasyPermissions.hasPermissions(this, cameraPerms)) {
-            EasyPermissions.requestPermissions(this,
-                    "This sample will upload a picture from your Camera",
-                    RC_CAMERA_PERMISSIONS, cameraPerms);
+        // Title is required
+        if (TextUtils.isEmpty(title)) {
+            mTitleField.setError(REQUIRED);
             return;
         }
 
-        // Choose file storage location
-        File file = new File(getExternalCacheDir(), UUID.randomUUID().toString());
-        mFileUri = Uri.fromFile(file);
-
-        // Camera
-        final List<Intent> cameraIntents = new ArrayList<Intent>();
-        final Intent captureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        final PackageManager packageManager = getPackageManager();
-        final List<ResolveInfo> listCam = packageManager.queryIntentActivities(captureIntent, 0);
-        for (ResolveInfo res : listCam){
-            final String packageName = res.activityInfo.packageName;
-            final Intent intent = new Intent(captureIntent);
-            intent.setComponent(new ComponentName(packageName, res.activityInfo.name));
-            intent.setPackage(packageName);
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, mFileUri);
-            cameraIntents.add(intent);
-        }
-
-        // Image Picker
-        Intent pickerIntent = new Intent(Intent.ACTION_PICK,
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-
-        Intent chooserIntent = Intent.createChooser(pickerIntent,
-                getString(R.string.picture_chooser_title));
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, cameraIntents.toArray(new
-                Parcelable[cameraIntents.size()]));
-        startActivityForResult(chooserIntent, TC_PICK_IMAGE);
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == TC_PICK_IMAGE) {
-            if (resultCode == Activity.RESULT_OK) {
-                final boolean isCamera;
-                if (data.getData() == null) {
-                    isCamera = true;
-                } else {
-                    isCamera = MediaStore.ACTION_IMAGE_CAPTURE.equals(data.getAction());
-                }
-                if (!isCamera) {
-                    mFileUri = data.getData();
-                }
-                Log.d(TAG, "Received file uri: " + mFileUri.getPath());
-
-                mTaskFragment.resizeBitmap(mFileUri, THUMBNAIL_MAX_DIMENSION);
-                mTaskFragment.resizeBitmap(mFileUri, FULL_SIZE_MAX_DIMENSION);
-            }
-        }
-    }
-
-    @Override
-    public void onDestroy() {
-        // store the data in the fragment
-        if (mResizedBitmap != null) {
-            mTaskFragment.setSelectedBitmap(mResizedBitmap);
-        }
-        if (mThumbnail != null) {
-            mTaskFragment.setThumbnail(mThumbnail);
-        }
-        super.onDestroy();
-    }
-
-    @Override
-    public void onBitmapResized(Bitmap resizedBitmap, int mMaxDimension) {
-        if (resizedBitmap == null) {
-            Log.e(TAG, "Couldn't resize bitmap in background task.");
-            Toast.makeText(getApplicationContext(), "Couldn't resize bitmap.",
-                    Toast.LENGTH_SHORT).show();
+        // Body is required
+        if (TextUtils.isEmpty(body)) {
+            mBodyField.setError(REQUIRED);
             return;
         }
-        if (mMaxDimension == THUMBNAIL_MAX_DIMENSION) {
-            mThumbnail = resizedBitmap;
-        } else if (mMaxDimension == FULL_SIZE_MAX_DIMENSION) {
-            mResizedBitmap = resizedBitmap;
-            mImageView.setImageBitmap(mResizedBitmap);
+
+        // Disable button so there are no multi-posts
+        setEditingEnabled(false);
+        Toast.makeText(this, "Posting...", Toast.LENGTH_SHORT).show();
+
+        // [START single_value_read]
+        final String userId = getUid();
+        mDatabase.child("users").child(userId).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // Get user value
+                        User user = dataSnapshot.getValue(User.class);
+
+                        // [START_EXCLUDE]
+                        if (user == null) {
+                            // User is null, error out
+                            Log.e(TAG, "User " + userId + " is unexpectedly null");
+                            Toast.makeText(NewPostActivity.this,
+                                    "Error: could not fetch user.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Write new post
+                            writeNewPost(userId, user.username, title, body);
+                        }
+
+                        // Finish this Activity, back to the stream
+                        setEditingEnabled(true);
+                        finish();
+                        // [END_EXCLUDE]
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.w(TAG, "getUser:onCancelled", databaseError.toException());
+                        // [START_EXCLUDE]
+                        setEditingEnabled(true);
+                        // [END_EXCLUDE]
+                    }
+                });
+        // [END single_value_read]
+    }
+
+    private void setEditingEnabled(boolean enabled) {
+        mTitleField.setEnabled(enabled);
+        mBodyField.setEnabled(enabled);
+        if (enabled) {
+            mSubmitButton.setVisibility(View.VISIBLE);
+        } else {
+            mSubmitButton.setVisibility(View.GONE);
         }
-
-        if (mThumbnail != null && mResizedBitmap != null) {
-            mSubmitButton.setEnabled(true);
-        }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
-    }
+    // [START write_fan_out]
+    private void writeNewPost(String userId, String username, String title, String body) {
+        // Create new post at /user-posts/$userid/$postid and at
+        // /posts/$postid simultaneously
+        String key = mDatabase.child("posts").push().getKey();
+        Post post = new Post(userId, username, title, body);
+        Map<String, Object> postValues = post.toMap();
 
-    @Override
-    public void onPermissionsGranted(int requestCode, List<String> perms) {}
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/posts/" + key, postValues);
+        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
 
-    @Override
-    public void onPermissionsDenied(int requestCode, List<String> perms) {
+        mDatabase.updateChildren(childUpdates);
     }
+    // [END write_fan_out]
 }
