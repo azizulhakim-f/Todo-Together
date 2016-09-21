@@ -17,7 +17,7 @@
 
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
 
-    <item android:drawable="@color/blue_grey_500"/>
+    <item android:drawable="@color/colorAccent"/>
     <item android:id="@+id/post_icon" android:drawable="@drawable/ic_person_outline_black_24dp"/>
     <item android:drawable="@drawable/circle"/>
 
