@@ -24,10 +24,6 @@ import com.azizulhakim.todotogether.models.User;
 import com.azizulhakim.todotogether.models.Comment;
 import com.azizulhakim.todotogether.models.Post;
 
-//import com.google.firebase.quickstart.database.models.User;
-//import com.google.firebase.quickstart.database.models.Comment;
-//import com.google.firebase.quickstart.database.models.Post;
-
 import java.util.ArrayList;
 import java.util.List;
 
