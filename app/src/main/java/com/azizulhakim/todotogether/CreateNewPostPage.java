@@ -8,22 +8,23 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.azizulhakim.todotogether.models.Task;
+import com.azizulhakim.todotogether.models.User;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.azizulhakim.todotogether.models.Post;
-import com.azizulhakim.todotogether.models.User;
-//import com.google.firebase.quickstart.database.models.Post;
-//import com.google.firebase.quickstart.database.models.User;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewPostActivity extends BaseActivity {
+//import com.google.firebase.quickstart.database.models.Task;
+//import com.google.firebase.quickstart.database.models.User;
 
-    private static final String TAG = "NewPostActivity";
+public class CreateNewPostPage extends InterfaceActivity {
+
+    private static final String TAG = "CreateNewPostPage";
     private static final String REQUIRED = "Required";
 
     // [START declare_database_ref]
@@ -37,7 +38,7 @@ public class NewPostActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_new_post);
+        setContentView(R.layout.create_new_post_page);
 
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -88,7 +89,7 @@ public class NewPostActivity extends BaseActivity {
                         if (user == null) {
                             // User is null, error out
                             Log.e(TAG, "User " + userId + " is unexpectedly null");
-                            Toast.makeText(NewPostActivity.this,
+                            Toast.makeText(CreateNewPostPage.this,
                                     "Error: could not fetch user.",
                                     Toast.LENGTH_SHORT).show();
                         } else {
@@ -125,11 +126,11 @@ public class NewPostActivity extends BaseActivity {
 
     // [START write_fan_out]
     private void writeNewPost(String userId, String username, String title, String body) {
-        // Create new post at /user-posts/$userid/$postid and at
+        // Create new task at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
         String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(userId, username, title, body);
-        Map<String, Object> postValues = post.toMap();
+        Task task = new Task(userId, username, title, body);
+        Map<String, Object> postValues = task.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/posts/" + key, postValues);

@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.azizulhakim.todotogether.PostDetailActivity;
+import com.azizulhakim.todotogether.PostDetailsPage;
 import com.azizulhakim.todotogether.R;
+import com.azizulhakim.todotogether.models.Task;
+import com.azizulhakim.todotogether.viewholder.PostViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -21,10 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.MutableData;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.Transaction;
-
-import com.azizulhakim.todotogether.models.Post;
-import com.azizulhakim.todotogether.viewholder.PostViewHolder;
-//import com.google.firebase.quickstart.database.models.Post;
+//import com.google.firebase.quickstart.database.models.Task;
 //import com.google.firebase.quickstart.database.viewholder.PostViewHolder;
 
 public abstract class PostListFragment extends Fragment {
@@ -35,7 +34,7 @@ public abstract class PostListFragment extends Fragment {
     private DatabaseReference mDatabase;
     // [END define_database_reference]
 
-    private FirebaseRecyclerAdapter<Post, PostViewHolder> mAdapter;
+    private FirebaseRecyclerAdapter<Task, PostViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
@@ -69,10 +68,10 @@ public abstract class PostListFragment extends Fragment {
 
         // Set up FirebaseRecyclerAdapter with the Query
         Query postsQuery = getQuery(mDatabase);
-        mAdapter = new FirebaseRecyclerAdapter<Post, PostViewHolder>(Post.class, R.layout.item_post,
+        mAdapter = new FirebaseRecyclerAdapter<Task, PostViewHolder>(Task.class, R.layout.item_post,
                 PostViewHolder.class, postsQuery) {
             @Override
-            protected void populateViewHolder(final PostViewHolder viewHolder, final Post model, final int position) {
+            protected void populateViewHolder(final PostViewHolder viewHolder, final Task model, final int position) {
                 final DatabaseReference postRef = getRef(position);
 
                 // Set click listener for the whole post view
@@ -80,9 +79,9 @@ public abstract class PostListFragment extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Launch PostDetailActivity
-                        Intent intent = new Intent(getActivity(), PostDetailActivity.class);
-                        intent.putExtra(PostDetailActivity.EXTRA_POST_KEY, postKey);
+                        // Launch PostDetailsPage
+                        Intent intent = new Intent(getActivity(), PostDetailsPage.class);
+                        intent.putExtra(PostDetailsPage.EXTRA_POST_KEY, postKey);
                         startActivity(intent);
                     }
                 });
@@ -94,7 +93,7 @@ public abstract class PostListFragment extends Fragment {
                     viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
                 }
 
-                // Bind Post to ViewHolder, setting OnClickListener for the star button
+                // Bind Task to ViewHolder, setting OnClickListener for the star button
                 viewHolder.bindToPost(model, new View.OnClickListener() {
                     @Override
                     public void onClick(View starView) {
@@ -117,7 +116,7 @@ public abstract class PostListFragment extends Fragment {
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
-                Post p = mutableData.getValue(Post.class);
+                Task p = mutableData.getValue(Task.class);
                 if (p == null) {
                     return Transaction.success(mutableData);
                 }

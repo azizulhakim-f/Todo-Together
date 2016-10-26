@@ -8,20 +8,21 @@ import java.util.Map;
 
 // [START post_class]
 @IgnoreExtraProperties
-public class Post {
+public class Task {
 
     public String uid;
     public String author;
     public String title;
     public String body;
+
     public int starCount = 0;
     public Map<String, Boolean> stars = new HashMap<>();
 
-    public Post() {
-        // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+    public Task() {
+        // Default constructor required for calls to DataSnapshot.getValue(Task.class)
     }
 
-    public Post(String uid, String author, String title, String body) {
+    public Task(String uid, String author, String title, String body) {
         this.uid = uid;
         this.author = author;
         this.title = title;

@@ -26,15 +26,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.azizulhakim.todotogether.fragment.MyPostsFragment;
+import com.azizulhakim.todotogether.fragment.MyTopPostsFragment;
+import com.azizulhakim.todotogether.fragment.RecentPostsFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.azizulhakim.todotogether.fragment.*;
 //import com.google.firebase.quickstart.database.fragment.MyPostsFragment;
 //import com.google.firebase.quickstart.database.fragment.MyTopPostsFragment;
 //import com.google.firebase.quickstart.database.fragment.RecentPostsFragment;
 
-public class  MainActivity extends BaseActivity {
+public class HomePage extends InterfaceActivity {
 
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "HomePage";
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -42,7 +44,7 @@ public class  MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.home_page);
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
@@ -75,11 +77,11 @@ public class  MainActivity extends BaseActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        // Button launches NewPostActivity
+        // Button launches CreateNewPostPage
         findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, NewPostActivity.class));
+                startActivity(new Intent(HomePage.this, CreateNewPostPage.class));
             }
         });
     }
@@ -95,7 +97,7 @@ public class  MainActivity extends BaseActivity {
         int i = item.getItemId();
         if (i == R.id.action_logout) {
             FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, SignInActivity.class));
+            startActivity(new Intent(this, LogInPage.class));
             finish();
             return true;
         } else {

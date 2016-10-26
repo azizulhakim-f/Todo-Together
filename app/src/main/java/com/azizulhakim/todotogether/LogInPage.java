@@ -1,4 +1,5 @@
 package com.azizulhakim.todotogether;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.azizulhakim.todotogether.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -16,13 +18,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import com.azizulhakim.todotogether.models.User;
 //import com.google.firebase.quickstart.database.models.User;
 
-public class SignInActivity extends BaseActivity implements View.OnClickListener {
+public class LogInPage extends InterfaceActivity implements View.OnClickListener {
 
-    private static final String TAG = "SignInActivity";
+    private static final String TAG = "LogInPage";
 
     private DatabaseReference mDatabase;
     private FirebaseAuth mAuth;
@@ -35,7 +35,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sign_in);
+        setContentView(R.layout.log_in_page);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -81,7 +81,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                         if (task.isSuccessful()) {
                             onAuthSuccess(task.getResult().getUser());
                         } else {
-                            Toast.makeText(SignInActivity.this, "Sign In Failed",
+                            Toast.makeText(LogInPage.this, "Sign In Failed",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -108,7 +108,7 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
                         if (task.isSuccessful()) {
                             onAuthSuccess(task.getResult().getUser());
                         } else {
-                            Toast.makeText(SignInActivity.this, "Sign Up Failed",
+                            Toast.makeText(LogInPage.this, "Sign Up Failed",
                                     Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -121,8 +121,8 @@ public class SignInActivity extends BaseActivity implements View.OnClickListener
         // Write new user
         writeNewUser(user.getUid(), username, user.getEmail());
 
-        // Go to MainActivity
-        startActivity(new Intent(SignInActivity.this, MainActivity.class));
+        // Go to HomePage
+        startActivity(new Intent(LogInPage.this, HomePage.class));
         finish();
     }
 

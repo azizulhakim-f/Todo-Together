@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.azizulhakim.todotogether.R;
-import com.azizulhakim.todotogether.models.Post;
+import com.azizulhakim.todotogether.models.Task;
 
 public class PostViewHolder extends RecyclerView.ViewHolder {
 
@@ -26,11 +26,11 @@ public class PostViewHolder extends RecyclerView.ViewHolder {
         bodyView = (TextView) itemView.findViewById(R.id.post_body);
     }
 
-    public void bindToPost(Post post, View.OnClickListener starClickListener) {
-        titleView.setText(post.title);
-        authorView.setText(post.author);
-        numStarsView.setText(String.valueOf(post.starCount));
-        bodyView.setText(post.body);
+    public void bindToPost(Task task, View.OnClickListener starClickListener) {
+        titleView.setText(task.title);
+        authorView.setText(task.author);
+        numStarsView.setText(String.valueOf(task.starCount));
+        bodyView.setText(task.body);
 
         starView.setOnClickListener(starClickListener);
     }

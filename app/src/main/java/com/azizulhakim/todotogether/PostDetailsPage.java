@@ -13,6 +13,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.azizulhakim.todotogether.models.Comment;
+import com.azizulhakim.todotogether.models.Task;
+import com.azizulhakim.todotogether.models.User;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -20,16 +23,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import com.azizulhakim.todotogether.models.User;
-import com.azizulhakim.todotogether.models.Comment;
-import com.azizulhakim.todotogether.models.Post;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostDetailActivity extends BaseActivity implements View.OnClickListener {
+public class PostDetailsPage extends InterfaceActivity implements View.OnClickListener {
 
-    private static final String TAG = "PostDetailActivity";
+    private static final String TAG = "PostDetailsPage";
 
     public static final String EXTRA_POST_KEY = "post_key";
 
@@ -49,7 +48,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_post_detail);
+        setContentView(R.layout.post_detail_and_comment);
 
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);
@@ -85,21 +84,21 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
         ValueEventListener postListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                // Get Post object and use the values to update the UI
-                Post post = dataSnapshot.getValue(Post.class);
+                // Get Task object and use the values to update the UI
+                Task task = dataSnapshot.getValue(Task.class);
                 // [START_EXCLUDE]
-                mAuthorView.setText(post.author);
-                mTitleView.setText(post.title);
-                mBodyView.setText(post.body);
+                mAuthorView.setText(task.author);
+                mTitleView.setText(task.title);
+                mBodyView.setText(task.body);
                 // [END_EXCLUDE]
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                // Getting Post failed, log a message
+                // Getting Task failed, log a message
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // [START_EXCLUDE]
-                Toast.makeText(PostDetailActivity.this, "Failed to load post.",
+                Toast.makeText(PostDetailsPage.this, "Failed to load post.",
                         Toast.LENGTH_SHORT).show();
                 // [END_EXCLUDE]
             }
@@ -195,7 +194,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
             ChildEventListener childEventListener = new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                    Log.d(TAG, "onChildAdded:" + dataSnapshot.getKey());
+                    Log.d(TAG, "ChildAdded:" + dataSnapshot.getKey());
 
                     // A new comment has been added, add it to the displayed list
                     Comment comment = dataSnapshot.getValue(Comment.class);
@@ -210,7 +209,7 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
 
                 @Override
                 public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                    Log.d(TAG, "onChildChanged:" + dataSnapshot.getKey());
+                    Log.d(TAG, "ChildChanged:" + dataSnapshot.getKey());
 
                     // A comment has changed, use the key to determine if we are displaying this
                     // comment and if so displayed the changed comment.
@@ -226,14 +225,14 @@ public class PostDetailActivity extends BaseActivity implements View.OnClickList
                         // Update the RecyclerView
                         notifyItemChanged(commentIndex);
                     } else {
-                        Log.w(TAG, "onChildChanged:unknown_child:" + commentKey);
+                        Log.w(TAG, "ChildChanged:unknown_child:" + commentKey);
                     }
                     // [END_EXCLUDE]
                 }
 
                 @Override
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    Log.d(TAG, "onChildRemoved:" + dataSnapshot.getKey());
+                    Log.d(TAG, "ChildRemoved:" + dataSnapshot.getKey());
 
                     // A comment has changed, use the key to determine if we are displaying this
                     // comment and if so remove it.
