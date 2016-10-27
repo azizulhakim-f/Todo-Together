@@ -22,10 +22,12 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.azizulhakim.todotogether.fragment.GroupListFragment;
 import com.azizulhakim.todotogether.fragment.MyPostsFragment;
 import com.azizulhakim.todotogether.fragment.MyTopPostsFragment;
 import com.azizulhakim.todotogether.fragment.RecentPostsFragment;
@@ -49,11 +51,13 @@ public class HomePage extends InterfaceActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
+                    new GroupListFragment(),
                     new RecentPostsFragment(),
                     new MyPostsFragment(),
                     new MyTopPostsFragment(),
             };
             private final String[] mFragmentNames = new String[] {
+                    "Groups",
                     getString(R.string.heading_recent),
                     getString(R.string.heading_my_posts),
                     getString(R.string.heading_my_top_posts)
@@ -82,6 +86,13 @@ public class HomePage extends InterfaceActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomePage.this, CreateNewPostPage.class));
+            }
+        });
+        findViewById(R.id.fab_new_group).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(TAG, "group button clicked.");
+                startActivity(new Intent(HomePage.this, CreateNewGroupPage.class));
             }
         });
     }
