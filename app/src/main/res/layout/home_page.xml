@@ -23,6 +23,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:src="@drawable/ic_image_edit"
-        android:layout_margin="16dp"/>
+        android:layout_margin="16dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="false" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_new_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_image_edit"
+        android:layout_marginLeft="16dp"
+        android:layout_alignTop="@+id/fab_new_post"
+        android:layout_toStartOf="@+id/fab_new_post" />
 
 </RelativeLayout>

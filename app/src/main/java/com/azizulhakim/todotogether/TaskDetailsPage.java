@@ -26,9 +26,9 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PostDetailsPage extends InterfaceActivity implements View.OnClickListener {
+public class TaskDetailsPage extends InterfaceActivity implements View.OnClickListener {
 
-    private static final String TAG = "PostDetailsPage";
+    private static final String TAG = "TaskDetailsPage";
 
     public static final String EXTRA_POST_KEY = "post_key";
 
@@ -98,7 +98,7 @@ public class PostDetailsPage extends InterfaceActivity implements View.OnClickLi
                 // Getting Task failed, log a message
                 Log.w(TAG, "loadPost:onCancelled", databaseError.toException());
                 // [START_EXCLUDE]
-                Toast.makeText(PostDetailsPage.this, "Failed to load post.",
+                Toast.makeText(TaskDetailsPage.this, "Failed to load post.",
                         Toast.LENGTH_SHORT).show();
                 // [END_EXCLUDE]
             }

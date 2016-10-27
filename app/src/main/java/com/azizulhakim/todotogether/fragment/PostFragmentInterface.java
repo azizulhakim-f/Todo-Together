@@ -10,8 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.azizulhakim.todotogether.PostDetailsPage;
 import com.azizulhakim.todotogether.R;
+import com.azizulhakim.todotogether.TaskDetailsPage;
 import com.azizulhakim.todotogether.models.Task;
 import com.azizulhakim.todotogether.viewholder.PostViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -26,9 +26,9 @@ import com.google.firebase.database.Transaction;
 //import com.google.firebase.quickstart.database.models.Task;
 //import com.google.firebase.quickstart.database.viewholder.PostViewHolder;
 
-public abstract class PostListFragment extends Fragment {
+public abstract class PostFragmentInterface extends Fragment {
 
-    private static final String TAG = "PostListFragment";
+    private static final String TAG = "PostFragmentInterface";
 
     // [START define_database_reference]
     private DatabaseReference mDatabase;
@@ -38,7 +38,7 @@ public abstract class PostListFragment extends Fragment {
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
 
-    public PostListFragment() {}
+    public PostFragmentInterface() {}
 
     @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container,
@@ -79,9 +79,9 @@ public abstract class PostListFragment extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Launch PostDetailsPage
-                        Intent intent = new Intent(getActivity(), PostDetailsPage.class);
-                        intent.putExtra(PostDetailsPage.EXTRA_POST_KEY, postKey);
+                        // Launch TaskDetailsPage
+                        Intent intent = new Intent(getActivity(), TaskDetailsPage.class);
+                        intent.putExtra(TaskDetailsPage.EXTRA_POST_KEY, postKey);
                         startActivity(intent);
                     }
                 });

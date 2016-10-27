@@ -1,16 +1,20 @@
 package com.azizulhakim.todotogether.fragment;
 
+/**
+ * Created by AZIZUL on 10/26/2016.
+ */
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
-public class MyPostsFragment extends PostFragmentInterface {
+public class GroupListFragment extends PostFragmentInterface {
 
-    public MyPostsFragment() {}
+    public GroupListFragment() {}
 
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
         // All my posts
-        return databaseReference.child("user-posts")
-                .child(getUid());
+        Query groupListQuery = databaseReference.child("user-groups").child(getUid());
+        return groupListQuery;
     }
 }

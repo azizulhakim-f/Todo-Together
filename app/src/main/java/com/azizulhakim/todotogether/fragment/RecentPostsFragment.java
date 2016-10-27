@@ -3,7 +3,7 @@ package com.azizulhakim.todotogether.fragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
-public class RecentPostsFragment extends PostListFragment {
+public class RecentPostsFragment extends PostFragmentInterface {
 
     public RecentPostsFragment() {}
 
