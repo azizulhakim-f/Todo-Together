@@ -25,6 +25,10 @@
         <activity android:name=".CreateNewGroupPage" />
         <activity android:name=".TaskDetailsPage" />
 
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
+
     </application>
 
 </manifest>

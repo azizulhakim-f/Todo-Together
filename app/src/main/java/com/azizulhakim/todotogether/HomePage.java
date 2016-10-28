@@ -87,7 +87,7 @@ public class HomePage extends InterfaceActivity {
         findViewById(R.id.fab_navigation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, CreateNewPostPage.class));
+                startActivity(new Intent(HomePage.this, MainActivity.class));
             }
         });
         findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
