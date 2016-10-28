@@ -30,6 +30,10 @@ public class HomePage extends InterfaceActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
 
+        findViewById(R.id.fab_navigation).setVisibility(View.INVISIBLE);
+        findViewById(R.id.fab_new_post).setVisibility(View.INVISIBLE);
+        findViewById(R.id.fab_new_group).setVisibility(View.INVISIBLE);
+
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
@@ -64,6 +68,28 @@ public class HomePage extends InterfaceActivity {
         tabLayout.setupWithViewPager(mViewPager);
 
         // Button launches CreateNewPostPage
+        findViewById(R.id.fab_container).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int visible = findViewById(R.id.fab_navigation).getVisibility();
+                if(visible==View.INVISIBLE) {
+                    findViewById(R.id.fab_navigation).setVisibility(View.VISIBLE);
+                    findViewById(R.id.fab_new_post).setVisibility(View.VISIBLE);
+                    findViewById(R.id.fab_new_group).setVisibility(View.VISIBLE);
+                }
+                else {
+                    findViewById(R.id.fab_navigation).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.fab_new_post).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.fab_new_group).setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        findViewById(R.id.fab_navigation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(HomePage.this, CreateNewPostPage.class));
+            }
+        });
         findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

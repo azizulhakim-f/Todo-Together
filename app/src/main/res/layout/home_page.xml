@@ -16,16 +16,17 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tabs" />
 
+
+
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_post"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
         android:src="@drawable/ic_image_edit"
-        android:layout_margin="16dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="false" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_alignTop="@+id/fab_container"
+        android:layout_toStartOf="@+id/fab_container" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab_new_group"
@@ -35,5 +36,25 @@
         android:layout_marginLeft="16dp"
         android:layout_alignTop="@+id/fab_new_post"
         android:layout_toStartOf="@+id/fab_new_post" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_image_edit"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/fab_container"
+        android:layout_toEndOf="@+id/fab_new_post" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_image_edit"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
