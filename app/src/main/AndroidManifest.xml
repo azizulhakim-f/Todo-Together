@@ -26,7 +26,7 @@
         <activity android:name=".TaskDetailsPage" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".NavigationPage"
             android:theme="@style/AppTheme.NoActionBar"/>
 
     </application>

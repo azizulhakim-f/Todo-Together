@@ -14,13 +14,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity
+public class NavigationPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.navigation_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity
             /** Called when a drawer has settled in a completely closed state. */
             public void onDrawerClosed(View view) {
                 super.onDrawerClosed(view);
-                startActivity(new Intent(MainActivity.this, HomePage.class));
+                startActivity(new Intent(NavigationPage.this, HomePage.class));
 
             }
 
@@ -62,13 +62,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            //drawer.closeDrawer(GravityCompat.START);
-            startActivity(new Intent(MainActivity.this, HomePage.class));
-        } else {
-            super.onBackPressed();
-        }
+        startActivity(new Intent(NavigationPage.this, HomePage.class));
     }
 
     @Override

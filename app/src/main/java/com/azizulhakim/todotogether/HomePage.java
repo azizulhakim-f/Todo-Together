@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.azizulhakim.todotogether.fragment.GroupListFragment;
 import com.azizulhakim.todotogether.fragment.MyPostsFragment;
 import com.azizulhakim.todotogether.fragment.MyTopPostsFragment;
 import com.azizulhakim.todotogether.fragment.RecentPostsFragment;
@@ -37,13 +36,13 @@ public class HomePage extends InterfaceActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new GroupListFragment(),
+                    //new GroupListFragment(),
                     new RecentPostsFragment(),
                     new MyPostsFragment(),
                     new MyTopPostsFragment(),
             };
             private final String[] mFragmentNames = new String[] {
-                    "Groups",
+                    //"Groups",
                     getString(R.string.heading_recent),
                     getString(R.string.heading_my_posts),
                     getString(R.string.heading_my_top_posts)
@@ -87,7 +86,7 @@ public class HomePage extends InterfaceActivity {
         findViewById(R.id.fab_navigation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, MainActivity.class));
+                startActivity(new Intent(HomePage.this, NavigationPage.class));
             }
         });
         findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
@@ -103,6 +102,10 @@ public class HomePage extends InterfaceActivity {
                 startActivity(new Intent(HomePage.this, CreateNewGroupPage.class));
             }
         });
+    }
+
+    public void onBackPressed() {
+        this.moveTaskToBack(true);
     }
 
     @Override
