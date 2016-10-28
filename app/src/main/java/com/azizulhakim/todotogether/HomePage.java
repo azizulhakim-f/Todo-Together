@@ -18,9 +18,7 @@ package com.azizulhakim.todotogether;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -32,7 +30,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.azizulhakim.todotogether.fragment.GroupListFragment;
 import com.azizulhakim.todotogether.fragment.MyPostsFragment;
@@ -88,6 +85,7 @@ public class HomePage extends InterfaceActivity implements NavigationView.OnNavi
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        /*
         // Button launches CreateNewPostPage
         findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +100,7 @@ public class HomePage extends InterfaceActivity implements NavigationView.OnNavi
                 startActivity(new Intent(HomePage.this, CreateNewGroupPage.class));
             }
         });
+        */
 
         Log.d(TAG, "Ok till oncreate previous.");
         ///////////////////////////////////////////////////////////////////////////////////
@@ -109,6 +108,7 @@ public class HomePage extends InterfaceActivity implements NavigationView.OnNavi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -117,6 +117,8 @@ public class HomePage extends InterfaceActivity implements NavigationView.OnNavi
                         .setAction("Action", null).show();
             }
         });
+
+        */
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
