@@ -2,9 +2,7 @@ package com.azizulhakim.todotogether;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -17,21 +15,15 @@ import android.view.View;
 public class NavigationPage extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
+    private static final String TAG = "NavigationPage";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.navigation_page);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -62,7 +54,7 @@ public class NavigationPage extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(NavigationPage.this, HomePage.class));
+        startActivity(new Intent(this, HomePage.class));
     }
 
     @Override
@@ -94,8 +86,9 @@ public class NavigationPage extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            startActivity(new Intent(this, CreateNewGroupPage.class));
         } else if (id == R.id.nav_gallery) {
+            startActivity(new Intent(this, GroupListPage.class));
 
         } else if (id == R.id.nav_slideshow) {
 

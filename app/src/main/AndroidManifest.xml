@@ -28,7 +28,9 @@
         <activity
             android:name=".NavigationPage"
             android:theme="@style/AppTheme.NoActionBar"/>
-
+        <activity
+            android:name=".GroupListPage"
+            android:theme="@style/AppTheme"/>
     </application>
 
 </manifest>
