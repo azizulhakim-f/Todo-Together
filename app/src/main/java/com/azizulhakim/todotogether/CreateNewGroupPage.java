@@ -126,13 +126,14 @@ public class CreateNewGroupPage extends InterfaceActivity {
     private void createNewGroup(String userId, String username, String title, String body) {
         // Create new task at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
-        String key = mDatabase.child("groups").push().getKey();
+        String groupkey = mDatabase.child("groups").push().getKey();
         Group group = new Group(title, body);
         Map<String, Object> groupDetails = group.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/groups/" + key, groupDetails);
-        childUpdates.put("/user-groups/" + userId + "/" + key, groupDetails);
+        childUpdates.put("/groups/" + groupkey, groupDetails);
+        childUpdates.put("/user-groups/" + userId + "/" + groupkey, groupDetails);
+        childUpdates.put("/group-users/" + groupkey, userId);
 
         mDatabase.updateChildren(childUpdates);
     }

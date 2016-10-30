@@ -4,6 +4,7 @@ package com.azizulhakim.todotogether.fragment;
  * Created by AZIZUL on 10/30/2016.
  */
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.azizulhakim.todotogether.GroupDetailsPage;
 import com.azizulhakim.todotogether.R;
 import com.azizulhakim.todotogether.models.Group;
 import com.azizulhakim.todotogether.viewholder.GroupViewHolder;
@@ -80,10 +82,10 @@ public abstract class GroupFragmentInterface extends Fragment {
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        // Launch TaskDetailsPage
-                       // Intent intent = new Intent(getActivity(), TaskDetailsPage.class);
-                       // intent.putExtra(TaskDetailsPage.EXTRA_POST_KEY, postKey);
-                       // startActivity(intent);
+                        // Launch GroupDetailsPage
+                        Intent intent = new Intent(getActivity(), GroupDetailsPage.class);
+                       intent.putExtra(GroupDetailsPage.EXTRA_POST_KEY, postKey);
+                        startActivity(intent);
                     }
                 });
 

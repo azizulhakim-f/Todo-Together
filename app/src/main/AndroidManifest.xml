@@ -24,6 +24,7 @@
         <activity android:name=".CreateNewPostPage" />
         <activity android:name=".CreateNewGroupPage" />
         <activity android:name=".TaskDetailsPage" />
+        <activity android:name=".GroupDetailsPage" />
 
         <activity
             android:name=".NavigationPage"
