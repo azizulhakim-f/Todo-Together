@@ -43,9 +43,9 @@ public class HomePage extends InterfaceActivity {
             };
             private final String[] mFragmentNames = new String[] {
                     //"Groups",
-                    getString(R.string.heading_recent),
-                    getString(R.string.heading_my_posts),
-                    getString(R.string.heading_my_top_posts)
+                    "Recent Tasks",
+                    "My Tasks",
+                    "My Top Tasks"
             };
             @Override
             public Fragment getItem(int position) {

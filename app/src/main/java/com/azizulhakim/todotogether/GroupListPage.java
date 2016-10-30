@@ -34,13 +34,15 @@ public class GroupListPage extends InterfaceActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
+                    new GroupListFragment(),
                     new GroupListFragment()
                     //new RecentPostsFragment(),
                     ///new MyPostsFragment(),
                     //new MyTopPostsFragment(),
             };
             private final String[] mFragmentNames = new String[] {
-                    "Groups"
+                    "Active Groups",
+                    "All Groups"
                     ///getString(R.string.heading_recent),
                    // getString(R.string.heading_my_posts),
                    // getString(R.string.heading_my_top_posts)

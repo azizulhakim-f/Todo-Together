@@ -9,6 +9,7 @@ import java.util.Map;
  * Created by AZIZUL on 10/26/2016.
  */
 public class Group {
+    public String uid;
     public String groupid;
     public String groupname;
     public String about;
@@ -27,7 +28,7 @@ public class Group {
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("groupuid", groupid);
+        result.put("groupid", groupid);
         result.put("groupname", groupname);
         result.put("about", about);
         return result;
