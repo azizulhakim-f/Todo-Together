@@ -8,7 +8,6 @@ import android.widget.TextView;
 import com.azizulhakim.todotogether.R;
 import com.azizulhakim.todotogether.models.Group;
 
-
 public class GroupViewHolder extends RecyclerView.ViewHolder {
 
     public TextView titleView;
@@ -30,7 +29,7 @@ public class GroupViewHolder extends RecyclerView.ViewHolder {
     public void bindToPost(Group group, View.OnClickListener starClickListener) {
         titleView.setText(group.groupname);
         authorView.setText(group.groupname);
-        numStarsView.setText(String.valueOf(5));
+        numStarsView.setText(String.valueOf(group.starCount));
         bodyView.setText(group.about);
 
         starView.setOnClickListener(starClickListener);

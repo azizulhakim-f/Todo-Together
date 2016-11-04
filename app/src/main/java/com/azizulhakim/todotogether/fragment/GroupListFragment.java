@@ -14,7 +14,7 @@ public class GroupListFragment extends GroupFragmentInterface {
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
         // All my posts
-        Query groupListQuery = databaseReference.child("user-groups").child(getUid());
+        Query groupListQuery = databaseReference.child("groups").limitToFirst(100);
         return groupListQuery;
     }
 }

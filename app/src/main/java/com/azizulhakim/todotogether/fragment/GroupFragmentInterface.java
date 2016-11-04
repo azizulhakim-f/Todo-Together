@@ -91,13 +91,12 @@ public abstract class GroupFragmentInterface extends Fragment {
 
                 // Determine if the current user has liked this post and set UI accordingly
 
-                /*
                 if (model.stars.containsKey(getUid())) {
                     viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
                 } else {
                     viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
                 }
-                */
+
 
 
                 // Bind Task to ViewHolder, setting OnClickListener for the star button
@@ -106,11 +105,11 @@ public abstract class GroupFragmentInterface extends Fragment {
                     public void onClick(View starView) {
                         // Need to write to both places the post is stored
                         DatabaseReference globalPostRef = mDatabase.child("groups").child(postRef.getKey());
-                        DatabaseReference userPostRef = mDatabase.child("user-groups").child(model.uid).child(postRef.getKey());
+                        //DatabaseReference userPostRef = mDatabase.child("user-groups").child(model.uid).child(postRef.getKey());
 
                         // Run two transactions
                         onStarClicked(globalPostRef);
-                        onStarClicked(userPostRef);
+                        //onStarClicked(userPostRef);
                     }
                 });
 
@@ -132,7 +131,7 @@ public abstract class GroupFragmentInterface extends Fragment {
                     return Transaction.success(mutableData);
                 }
 
-                /*
+
 
                 if (p.stars.containsKey(getUid())) {
                     // Unstar the post and remove self from stars
@@ -143,7 +142,7 @@ public abstract class GroupFragmentInterface extends Fragment {
                     p.starCount = p.starCount + 1;
                     p.stars.put(getUid(), true);
                 }
-                */
+
 
                 // Set value and report transaction success
                 mutableData.setValue(p);

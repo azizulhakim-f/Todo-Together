@@ -12,9 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.azizulhakim.todotogether.fragment.MyPostsFragment;
-import com.azizulhakim.todotogether.fragment.MyTopPostsFragment;
-import com.azizulhakim.todotogether.fragment.RecentPostsFragment;
+import com.azizulhakim.todotogether.fragment.TaskPopularFragment;
+import com.azizulhakim.todotogether.fragment.TaskRecentFragment;
+import com.azizulhakim.todotogether.fragment.TaskofMeFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class HomePage extends InterfaceActivity {
@@ -37,9 +37,9 @@ public class HomePage extends InterfaceActivity {
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
                     //new GroupListFragment(),
-                    new RecentPostsFragment(),
-                    new MyPostsFragment(),
-                    new MyTopPostsFragment(),
+                    new TaskRecentFragment(),
+                    new TaskofMeFragment(),
+                    new TaskPopularFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     //"Groups",

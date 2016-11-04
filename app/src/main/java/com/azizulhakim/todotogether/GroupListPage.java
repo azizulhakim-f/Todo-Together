@@ -15,7 +15,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.azizulhakim.todotogether.fragment.GroupFollowedFragment;
 import com.azizulhakim.todotogether.fragment.GroupListFragment;
+import com.azizulhakim.todotogether.fragment.GroupPopularFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class GroupListPage extends InterfaceActivity {
@@ -34,14 +36,16 @@ public class GroupListPage extends InterfaceActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new GroupListFragment(),
+                    new GroupFollowedFragment(),
+                    new GroupPopularFragment(),
                     new GroupListFragment()
-                    //new RecentPostsFragment(),
-                    ///new MyPostsFragment(),
-                    //new MyTopPostsFragment(),
+                    //new TaskRecentFragment(),
+                    ///new TaskofMeFragment(),
+                    //new TaskPopularFragment(),
             };
             private final String[] mFragmentNames = new String[] {
-                    "Active Groups",
+                    "Followed Groups",
+                    "Most Popular",
                     "All Groups"
                     ///getString(R.string.heading_recent),
                    // getString(R.string.heading_my_posts),

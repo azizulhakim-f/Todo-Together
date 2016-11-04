@@ -132,7 +132,7 @@ public class CreateNewGroupPage extends InterfaceActivity {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/groups/" + groupkey, groupDetails);
-        childUpdates.put("/user-groups/" + userId + "/" + groupkey, groupDetails);
+        //childUpdates.put("/user-groups/" + userId + "/" + groupkey, groupDetails);
         childUpdates.put("/group-users/" + groupkey, userId);
 
         mDatabase.updateChildren(childUpdates);
