@@ -27,10 +27,13 @@ public class CreateNewPostPage extends InterfaceActivity {
     private static final String TAG = "CreateNewPostPage";
     private static final String REQUIRED = "Required";
 
+
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
     // [END declare_database_ref]
 
+    public static final String EXTRA_POST_KEY = "post_key";
+    private String groupKey;
     private EditText mTitleField;
     private EditText mBodyField;
     private FloatingActionButton mSubmitButton;
@@ -43,6 +46,8 @@ public class CreateNewPostPage extends InterfaceActivity {
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END initialize_database_ref]
+
+        groupKey = getIntent().getStringExtra(EXTRA_POST_KEY);
 
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.field_body);
@@ -135,7 +140,7 @@ public class CreateNewPostPage extends InterfaceActivity {
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/posts/" + key, postValues);
         childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
-
+        childUpdates.put("/group-posts/" + groupKey + "/" + key, postValues);
         mDatabase.updateChildren(childUpdates);
     }
     // [END write_fan_out]

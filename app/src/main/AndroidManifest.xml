@@ -32,6 +32,10 @@
         <activity
             android:name=".GroupListPage"
             android:theme="@style/AppTheme"/>
+        <activity
+            android:name=".GroupChoosePage"
+            android:theme="@style/AppTheme"/>
+
     </application>
 
 </manifest>

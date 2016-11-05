@@ -99,7 +99,7 @@ public class HomePage extends InterfaceActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "group button clicked.");
-                startActivity(new Intent(HomePage.this, CreateNewGroupPage.class));
+                startActivity(new Intent(HomePage.this, GroupChoosePage.class));
             }
         });
     }
