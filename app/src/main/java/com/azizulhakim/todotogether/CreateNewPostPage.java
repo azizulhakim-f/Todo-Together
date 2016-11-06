@@ -47,7 +47,7 @@ public class CreateNewPostPage extends InterfaceActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END initialize_database_ref]
 
-        groupKey = getIntent().getStringExtra(EXTRA_POST_KEY);
+        groupKey = FirebaseUtil.getCurrentGroupID();
 
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.field_body);
@@ -139,7 +139,7 @@ public class CreateNewPostPage extends InterfaceActivity {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/posts/" + key, postValues);
-        childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
+        //childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
         childUpdates.put("/group-posts/" + groupKey + "/" + key, postValues);
         mDatabase.updateChildren(childUpdates);
     }

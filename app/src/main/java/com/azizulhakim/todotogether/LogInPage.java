@@ -49,6 +49,9 @@ public class LogInPage extends InterfaceActivity implements View.OnClickListener
         // Click listeners
         mSignInButton.setOnClickListener(this);
         mSignUpButton.setOnClickListener(this);
+
+        //Toast.makeText(LogInPage.this, "I am new",
+               // Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -122,7 +125,9 @@ public class LogInPage extends InterfaceActivity implements View.OnClickListener
         writeNewUser(user.getUid(), username, user.getEmail());
 
         // Go to HomePage
-        startActivity(new Intent(LogInPage.this, HomePage.class));
+        // startActivity(new Intent(LogInPage.this, HomePage.class));
+        // Go to GroupChoosePage
+        startActivity( new Intent(LogInPage.this, GroupChoosePage.class));
         finish();
     }
 

@@ -12,7 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.azizulhakim.todotogether.fragment.TaskPopularFragment;
 import com.azizulhakim.todotogether.fragment.TaskRecentFragment;
 import com.azizulhakim.todotogether.fragment.TaskofMeFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +20,9 @@ public class HomePage extends InterfaceActivity {
 
     private static final String TAG = "HomePage";
 
+    public static final String GROUP_KEY = "post_key";
+    private String groupKey;
+
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
 
@@ -28,6 +30,9 @@ public class HomePage extends InterfaceActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+
+        groupKey = getIntent().getStringExtra(GROUP_KEY);
+        FirebaseUtil.setCurrentGroup(groupKey);
 
         findViewById(R.id.fab_navigation).setVisibility(View.INVISIBLE);
         findViewById(R.id.fab_new_post).setVisibility(View.INVISIBLE);
@@ -39,13 +44,13 @@ public class HomePage extends InterfaceActivity {
                     //new GroupListFragment(),
                     new TaskRecentFragment(),
                     new TaskofMeFragment(),
-                    new TaskPopularFragment(),
+                    //new TaskPopularFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     //"Groups",
                     "Recent Tasks",
                     "My Tasks",
-                    "My Top Tasks"
+                   // "My Top Tasks"
             };
             @Override
             public Fragment getItem(int position) {
@@ -99,13 +104,14 @@ public class HomePage extends InterfaceActivity {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "group button clicked.");
-                startActivity(new Intent(HomePage.this, GroupChoosePage.class));
+                startActivity(new Intent(HomePage.this, GroupDetailsPage.class));
             }
         });
     }
 
     public void onBackPressed() {
-        this.moveTaskToBack(true);
+        //this.moveTaskToBack(true);
+        startActivity(new Intent(HomePage.this, GroupChoosePage.class));
     }
 
     @Override

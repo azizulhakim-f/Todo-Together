@@ -33,7 +33,7 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
     public static final String EXTRA_POST_KEY = "post_key";
 
     private DatabaseReference mGroupReference;
-    private DatabaseReference mUsersReference;
+    private DatabaseReference mCommentsReference;
     private ValueEventListener mPostListener;
     private String mPostKey;
     private CommentAdapter mAdapter;
@@ -52,6 +52,8 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
 
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);
+        mPostKey = FirebaseUtil.getCurrentGroupID();
+
         if (mPostKey == null) {
             throw new IllegalArgumentException("Must pass EXTRA_POST_KEY");
         }
@@ -59,8 +61,8 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
         // Initialize Database
         mGroupReference = FirebaseDatabase.getInstance().getReference()
                 .child("groups").child(mPostKey);
-        mUsersReference = FirebaseDatabase.getInstance().getReference()
-                .child("group-users").child(mPostKey);
+        mCommentsReference = FirebaseDatabase.getInstance().getReference()
+                .child("group-comments").child(mPostKey);
 
         // Initialize Views
         mAuthorView = (TextView) findViewById(R.id.post_author);
@@ -110,8 +112,8 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
         mPostListener = postListener;
 
         // Listen for comments
-        //mAdapter = new CommentAdapter(this, mUsersReference);
-       // mCommentsRecycler.setAdapter(mAdapter);
+        mAdapter = new CommentAdapter(this, mCommentsReference);
+        mCommentsRecycler.setAdapter(mAdapter);
     }
 
     @Override
@@ -150,7 +152,7 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
                         Comment comment = new Comment(uid, authorName, commentText);
 
                         // Push the comment, it will appear in the list
-                        mUsersReference.push().setValue(comment);
+                        mCommentsReference.push().setValue(comment);
 
                         // Clear the field
                         mCommentField.setText(null);

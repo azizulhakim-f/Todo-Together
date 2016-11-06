@@ -12,13 +12,15 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.azizulhakim.todotogether.fragment.GroupChooseFragment;
+import com.azizulhakim.todotogether.fragment.GroupMyFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class GroupChoosePage extends InterfaceActivity {
 
-    private static final String TAG = "GroupListPage";
+    private static final String TAG = "GroupChoosePage";
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -32,12 +34,13 @@ public class GroupChoosePage extends InterfaceActivity {
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    new GroupChooseFragment(),
+                    new GroupMyFragment(),
+                    new GroupChooseFragment()
 
             };
             private final String[] mFragmentNames = new String[] {
-                    "Choose Group",
-
+                    "My Groups",
+                    "All Groups"
             };
             @Override
             public Fragment getItem(int position) {
@@ -58,13 +61,20 @@ public class GroupChoosePage extends InterfaceActivity {
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
+        findViewById(R.id.fab_navigation).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GroupChoosePage.this, NavigationPage.class));
+            }
+        });
+
     }
 
-    /*
+
     public void onBackPressed() {
         this.moveTaskToBack(true);
     }
-    */
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

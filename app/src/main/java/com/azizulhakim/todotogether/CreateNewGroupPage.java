@@ -1,5 +1,6 @@
 package com.azizulhakim.todotogether;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
@@ -83,6 +84,7 @@ public class CreateNewGroupPage extends InterfaceActivity {
                         // Get user value
                         User user = dataSnapshot.getValue(User.class);
 
+
                         // [START_EXCLUDE]
                         if (user == null) {
                             // User is null, error out
@@ -95,8 +97,9 @@ public class CreateNewGroupPage extends InterfaceActivity {
                             createNewGroup(userId, user.username, title, body);
                         }
 
+
                         // Finish this Activity, back to the stream
-                        setEditingEnabled(true);
+                        startActivity( new Intent(CreateNewGroupPage.this, GroupChoosePage.class));
                         finish();
                         // [END_EXCLUDE]
                     }
@@ -132,8 +135,8 @@ public class CreateNewGroupPage extends InterfaceActivity {
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/groups/" + groupkey, groupDetails);
-        //childUpdates.put("/user-groups/" + userId + "/" + groupkey, groupDetails);
-        childUpdates.put("/group-users/" + groupkey, userId);
+        childUpdates.put("/user-groups/" + userId + "/" + groupkey, groupDetails);
+        childUpdates.put("/group-users/" + groupkey + "/" + userId, userId);
 
         mDatabase.updateChildren(childUpdates);
     }

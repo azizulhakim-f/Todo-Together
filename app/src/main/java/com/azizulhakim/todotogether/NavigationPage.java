@@ -54,7 +54,8 @@ public class NavigationPage extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, HomePage.class));
+        //   startActivity(new Intent(this, HomePage.class));
+        startActivity(new Intent(this, GroupChoosePage.class));
     }
 
     @Override
