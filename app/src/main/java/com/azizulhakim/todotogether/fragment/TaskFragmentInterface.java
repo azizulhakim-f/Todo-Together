@@ -10,12 +10,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.azizulhakim.todotogether.FirebaseUtil;
 import com.azizulhakim.todotogether.R;
 import com.azizulhakim.todotogether.TaskDetailsPage;
 import com.azizulhakim.todotogether.models.Task;
 import com.azizulhakim.todotogether.viewholder.PostViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -154,7 +154,7 @@ public abstract class TaskFragmentInterface extends Fragment {
     }
 
     public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+        return FirebaseUtil.getMyUserID();
     }
 
     public abstract Query getQuery(DatabaseReference databaseReference);

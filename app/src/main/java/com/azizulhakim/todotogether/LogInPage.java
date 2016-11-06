@@ -35,7 +35,7 @@ public class LogInPage extends InterfaceActivity implements View.OnClickListener
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.log_in_page);
+        setContentView(R.layout.page__log_in);
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
@@ -122,8 +122,8 @@ public class LogInPage extends InterfaceActivity implements View.OnClickListener
         String username = usernameFromEmail(user.getEmail());
 
         // Write new user
-        writeNewUser(user.getUid(), username, user.getEmail());
-
+        writeNewUser(username+username, username, user.getEmail());
+        FirebaseUtil.setMyUserID( username+username);
         // Go to HomePage
         // startActivity(new Intent(LogInPage.this, HomePage.class));
         // Go to GroupChoosePage

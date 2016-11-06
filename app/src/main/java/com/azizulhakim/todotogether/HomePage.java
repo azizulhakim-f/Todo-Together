@@ -29,7 +29,7 @@ public class HomePage extends InterfaceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_page);
+        setContentView(R.layout.page__tasks_of_group);
 
         groupKey = getIntent().getStringExtra(GROUP_KEY);
         FirebaseUtil.setCurrentGroup(groupKey);

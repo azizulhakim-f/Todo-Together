@@ -3,10 +3,9 @@ package com.azizulhakim.todotogether;
 /**
  * Created by AZIZUL on 9/18/2016.
  */
+
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
-
-import com.google.firebase.auth.FirebaseAuth;
 
 
 public class InterfaceActivity extends AppCompatActivity {
@@ -30,7 +29,7 @@ public class InterfaceActivity extends AppCompatActivity {
     }
 
     public String getUid() {
-        return FirebaseAuth.getInstance().getCurrentUser().getUid();
+        return FirebaseUtil.getMyUserID();
     }
 
 
