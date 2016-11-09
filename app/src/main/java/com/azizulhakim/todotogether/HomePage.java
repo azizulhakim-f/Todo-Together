@@ -43,13 +43,15 @@ public class HomePage extends InterfaceActivity {
             private final Fragment[] mFragments = new Fragment[] {
                     //new GroupListFragment(),
                     new TaskRecentFragment(),
-                    new TaskofMeFragment(),
+                    new TaskRecentFragment(),
+                    new TaskofMeFragment()
                     //new TaskPopularFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     //"Groups",
-                    "Recent Tasks",
-                    "My Tasks",
+                    "To Do",
+                    "Doing",
+                    "Done"
                    // "My Top Tasks"
             };
             @Override
@@ -92,6 +94,7 @@ public class HomePage extends InterfaceActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(HomePage.this, NavigationPage.class));
+
             }
         });
         findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {

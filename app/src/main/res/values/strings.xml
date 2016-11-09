@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">"Todo Together "</string>
+    <string name="app_name">"Project Buddy"</string>
     <string name="action_settings">Settings</string>
 
     //firebase authenticate

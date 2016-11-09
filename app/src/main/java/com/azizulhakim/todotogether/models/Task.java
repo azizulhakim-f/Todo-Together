@@ -3,6 +3,7 @@ package com.azizulhakim.todotogether.models;
 import com.google.firebase.database.Exclude;
 import com.google.firebase.database.IgnoreExtraProperties;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,6 +15,8 @@ public class Task {
     public String author;
     public String title;
     public String body;
+    public Date duedate;
+    public Date createdate;
 
     public int starCount = 0;
     public Map<String, Boolean> stars = new HashMap<>();
