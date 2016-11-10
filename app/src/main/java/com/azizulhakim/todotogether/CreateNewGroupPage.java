@@ -17,9 +17,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 
 public class CreateNewGroupPage extends InterfaceActivity {
 
@@ -99,7 +96,7 @@ public class CreateNewGroupPage extends InterfaceActivity {
 
 
                         // Finish this Activity, back to the stream
-                        startActivity( new Intent(CreateNewGroupPage.this, GroupChoosePage.class));
+                        startActivity( new Intent(CreateNewGroupPage.this, NavigationHomePage.class));
                         finish();
                         // [END_EXCLUDE]
                     }

@@ -27,11 +27,8 @@
         <activity android:name=".GroupDetailsPage" />
 
         <activity
-            android:name=".NavigationPage"
+            android:name=".NavigationHomePage"
             android:theme="@style/AppTheme.NoActionBar"/>
-        <activity
-            android:name=".GroupChoosePage"
-            android:theme="@style/AppTheme"/>
         <activity android:name=".AddUserPage"/>
 
     </application>

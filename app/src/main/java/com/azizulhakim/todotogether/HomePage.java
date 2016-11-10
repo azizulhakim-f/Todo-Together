@@ -93,7 +93,7 @@ public class HomePage extends InterfaceActivity {
         findViewById(R.id.fab_navigation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, NavigationPage.class));
+                //startActivity(new Intent(HomePage.this, NavigationPage.class));
 
             }
         });
@@ -114,7 +114,7 @@ public class HomePage extends InterfaceActivity {
 
     public void onBackPressed() {
         //this.moveTaskToBack(true);
-        startActivity(new Intent(HomePage.this, GroupChoosePage.class));
+        startActivity(new Intent(HomePage.this, NavigationHomePage.class));
     }
 
     @Override
