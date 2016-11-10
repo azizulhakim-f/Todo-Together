@@ -17,6 +17,14 @@ public class Task {
     public String body;
     public Date duedate;
     public Date createdate;
+    public int status;
+    public String handler;
+
+    /*
+    1 = TO-DO
+    2 = DOING
+    3 = DONE
+     */
 
     public int starCount = 0;
     public Map<String, Boolean> stars = new HashMap<>();
