@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".HomePage"
+            android:name=".TaskListPage"
             android:label="@string/app_name"
             android:theme="@style/AppTheme" />
         <activity android:name=".CreateNewPostPage" />
@@ -27,7 +27,7 @@
         <activity android:name=".GroupDetailsPage" />
 
         <activity
-            android:name=".NavigationHomePage"
+            android:name=".HomePage"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".AddUserPage"/>
 

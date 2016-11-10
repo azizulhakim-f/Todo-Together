@@ -15,8 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.azizulhakim.todotogether.FirebaseUtil;
-import com.azizulhakim.todotogether.HomePage;
 import com.azizulhakim.todotogether.R;
+import com.azizulhakim.todotogether.TaskListPage;
 import com.azizulhakim.todotogether.models.Group;
 import com.azizulhakim.todotogether.viewholder.GroupViewHolder;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -85,8 +85,8 @@ public abstract class GroupChooseInterface extends Fragment {
                         // Launch GroupDetailsPage
                         //Intent intent = new Intent(getActivity(), CreateNewPostPage.class);
                         //intent.putExtra(CreateNewPostPage.EXTRA_POST_KEY, postKey);
-                        Intent intent = new Intent(getActivity(), HomePage.class);
-                        intent.putExtra(HomePage.GROUP_KEY, postKey);
+                        Intent intent = new Intent(getActivity(), TaskListPage.class);
+                        intent.putExtra(TaskListPage.GROUP_KEY, postKey);
                         FirebaseUtil.setCurrentGroup(postKey);
                         startActivity(intent);
                     }

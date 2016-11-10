@@ -129,10 +129,12 @@ public class LogInPage extends InterfaceActivity implements View.OnClickListener
         // Write new user
         String key = makeUserID(username);
         writeNewUser( key , username, user.getEmail());
+
         FirebaseUtil.setMyUserID( key );
+        FirebaseUtil.setMyNameAndEmail(username, user.getEmail());
 
         // Go to GroupChoosePage
-        startActivity( new Intent(LogInPage.this, NavigationHomePage.class));
+        startActivity( new Intent(LogInPage.this, HomePage.class));
         finish();
     }
 

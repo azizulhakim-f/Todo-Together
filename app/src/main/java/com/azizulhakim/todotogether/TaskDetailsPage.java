@@ -48,7 +48,7 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.post_detail_and_comment);
+        setContentView(R.layout.page__taskdetails);
 
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);

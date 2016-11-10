@@ -1,58 +1,58 @@
-
 package com.azizulhakim.todotogether;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
-import com.azizulhakim.todotogether.fragment.TaskRecentFragment;
-import com.azizulhakim.todotogether.fragment.TaskofMeFragment;
-import com.google.firebase.auth.FirebaseAuth;
+import com.azizulhakim.todotogether.fragment.GroupMyFragment;
 
-public class HomePage extends InterfaceActivity {
+public class HomePage extends InterfaceActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
+
 
     private static final String TAG = "HomePage";
-
-    public static final String GROUP_KEY = "post_key";
-    private String groupKey;
-
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
+
+    //navigationbar: name, email
+    TextView mynameview;
+    TextView myemailview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.page__tasks_of_group);
+        setContentView(R.layout.page_home);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        groupKey = getIntent().getStringExtra(GROUP_KEY);
-        FirebaseUtil.setCurrentGroup(groupKey);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
-        findViewById(R.id.fab_navigation).setVisibility(View.INVISIBLE);
-        findViewById(R.id.fab_new_post).setVisibility(View.INVISIBLE);
-        findViewById(R.id.fab_new_group).setVisibility(View.INVISIBLE);
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    //new GroupListFragment(),
-                    new TaskRecentFragment(),
-                    new TaskRecentFragment(),
-                    new TaskofMeFragment()
-                    //new TaskPopularFragment(),
+                    new GroupMyFragment()
             };
             private final String[] mFragmentNames = new String[] {
-                    //"Groups",
-                    "To Do",
-                    "Doing",
-                    "Done"
-                   // "My Top Tasks"
+                    "My Groups"
             };
             @Override
             public Fragment getItem(int position) {
@@ -70,70 +70,83 @@ public class HomePage extends InterfaceActivity {
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(mViewPager);
 
-        // Button launches CreateNewPostPage
-        findViewById(R.id.fab_container).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int visible = findViewById(R.id.fab_navigation).getVisibility();
-                if(visible==View.INVISIBLE) {
-                    findViewById(R.id.fab_navigation).setVisibility(View.VISIBLE);
-                    findViewById(R.id.fab_new_post).setVisibility(View.VISIBLE);
-                    findViewById(R.id.fab_new_group).setVisibility(View.VISIBLE);
-                }
-                else {
-                    findViewById(R.id.fab_navigation).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.fab_new_post).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.fab_new_group).setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-        findViewById(R.id.fab_navigation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(HomePage.this, NavigationPage.class));
 
-            }
-        });
-        findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(HomePage.this, CreateNewPostPage.class));
-            }
-        });
-        findViewById(R.id.fab_new_group).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "group button clicked.");
-                startActivity(new Intent(HomePage.this, GroupDetailsPage.class));
-            }
-        });
+
+        // set my name and email
+        View headerView = navigationView.getHeaderView(0);
+        String myname = FirebaseUtil.getMyName();
+        String myemail = FirebaseUtil.getMyEmail();
+        Toaster(myname);
+        mynameview = (TextView)headerView.findViewById(R.id.my_name_display);
+        myemailview = (TextView)headerView.findViewById(R.id.my_email_display);
+        mynameview.setText( myname );
+        myemailview.setText( myemail );
+        // DONE.
     }
 
+    @Override
     public void onBackPressed() {
-        //this.moveTaskToBack(true);
-        startActivity(new Intent(HomePage.this, NavigationHomePage.class));
+        //   startActivity(new Intent(this, TaskListPage.class));
+        // startActivity(new Intent(this, GroupChoosePage.class));
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if(drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        }
+        else {
+            this.moveTaskToBack(true);
+        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int i = item.getItemId();
-        if (i == R.id.action_logout) {
-            FirebaseAuth.getInstance().signOut();
-            startActivity(new Intent(this, LogInPage.class));
-            finish();
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
             return true;
-        } else {
-            return super.onOptionsItemSelected(item);
         }
+
+        return super.onOptionsItemSelected(item);
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            ///create new group
+            startActivity(new Intent(this, CreateNewGroupPage.class));
+
+        } else if (id == R.id.nav_gallery) {
+            ///groups
+            //startActivity(new Intent(this, GroupListPage.class));
+            Toaster("Groups");
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
 }

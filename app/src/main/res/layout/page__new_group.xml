@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.google.firebase.quickstart.database.NewPostActivity">
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/field_title"
@@ -13,7 +11,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
-        android:hint="Group Name"
+        android:hint="Project Name"
         android:maxLines="1" />
 
     <EditText
@@ -25,7 +23,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="5dp"
-        android:hint="About this group..."
+        android:hint="About this Project..."
         android:inputType="textMultiLine"
         android:maxLines="10"
         android:scrollHorizontally="false" />

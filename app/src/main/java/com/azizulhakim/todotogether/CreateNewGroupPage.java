@@ -34,7 +34,7 @@ public class CreateNewGroupPage extends InterfaceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_new_group_page);
+        setContentView(R.layout.page__new_group);
 
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -96,7 +96,7 @@ public class CreateNewGroupPage extends InterfaceActivity {
 
 
                         // Finish this Activity, back to the stream
-                        startActivity( new Intent(CreateNewGroupPage.this, NavigationHomePage.class));
+                        startActivity( new Intent(CreateNewGroupPage.this, HomePage.class));
                         finish();
                         // [END_EXCLUDE]
                     }

@@ -49,7 +49,7 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.group_detail_and_user);
+        setContentView(R.layout.page__groupdetails);
 
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);

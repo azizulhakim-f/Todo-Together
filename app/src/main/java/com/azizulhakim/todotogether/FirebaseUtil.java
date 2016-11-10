@@ -11,6 +11,13 @@ public class FirebaseUtil {
     public static String CurrentGroupID = null;
     public static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
     public static String myUserID = null;
+    public static String myname = "Azizul Hakim";
+    public static String myemail = "azizulhakim.csedu@gmail.com";
+
+    public static void setMyNameAndEmail(String name, String mail){
+        myname = name;
+        myemail = mail;
+    }
 
     public static void setCurrentGroup(String GroupKey){
         CurrentGroupID = GroupKey;
@@ -27,6 +34,10 @@ public class FirebaseUtil {
     public static String getMyUserID() {
         return myUserID;
     }
+
+    public static String getMyName(){ return myname; }
+
+    public static String getMyEmail(){ return myemail; }
 
     public static DatabaseReference getUserReference() {
         return mDatabase.child("users");
