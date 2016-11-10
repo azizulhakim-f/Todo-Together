@@ -60,11 +60,10 @@
         tools:listitem="@layout/item_comment" />
 
     <Button
-        style="@+id/add_user_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Add User"
-        android:id="@+id/button"
+        android:id="@+id/add_user_button"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true" />
 

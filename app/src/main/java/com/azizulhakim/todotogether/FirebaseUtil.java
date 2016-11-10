@@ -32,5 +32,7 @@ public class FirebaseUtil {
         return mDatabase.child("users");
     }
 
+    public static DatabaseReference getGroupReference() { return mDatabase.child("groups"); }
+
 
 }

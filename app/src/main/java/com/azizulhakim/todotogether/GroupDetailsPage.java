@@ -1,6 +1,7 @@
 package com.azizulhakim.todotogether;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -74,6 +75,14 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
 
         mCommentButton.setOnClickListener(this);
         mCommentsRecycler.setLayoutManager(new LinearLayoutManager(this));
+
+        findViewById(R.id.add_user_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GroupDetailsPage.this, AddUserPage.class));
+
+            }
+        });
 
     }
 

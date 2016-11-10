@@ -118,11 +118,17 @@ public class LogInPage extends InterfaceActivity implements View.OnClickListener
                 });
     }
 
+    String makeUserID(String emailname){
+        String key = emailname + emailname;
+        key = key.replace('.', ',');
+        return key;
+    }
     private void onAuthSuccess(FirebaseUser user) {
         String username = usernameFromEmail(user.getEmail());
 
         // Write new user
-        writeNewUser(username+username, username, user.getEmail());
+        String key = makeUserID(username);
+        writeNewUser( key , username, user.getEmail());
         FirebaseUtil.setMyUserID( username+username);
         // Go to HomePage
         // startActivity(new Intent(LogInPage.this, HomePage.class));
@@ -161,7 +167,6 @@ public class LogInPage extends InterfaceActivity implements View.OnClickListener
     // [START basic_write]
     private void writeNewUser(String userId, String name, String email) {
         User user = new User(name, email);
-
         mDatabase.child("users").child(userId).setValue(user);
     }
     // [END basic_write]

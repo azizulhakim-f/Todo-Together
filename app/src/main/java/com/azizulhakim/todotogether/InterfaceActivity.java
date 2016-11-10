@@ -6,6 +6,7 @@ package com.azizulhakim.todotogether;
 
 import android.app.ProgressDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 
 public class InterfaceActivity extends AppCompatActivity {
@@ -32,6 +33,10 @@ public class InterfaceActivity extends AppCompatActivity {
         return FirebaseUtil.getMyUserID();
     }
 
+    public void Toaster(String msg){
+        Toast.makeText(getApplicationContext(), msg,
+                Toast.LENGTH_SHORT).show();
+    }
 
     @Override
     public void onStop() {
