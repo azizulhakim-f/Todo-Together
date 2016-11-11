@@ -16,9 +16,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.HashMap;
-import java.util.Map;
-
 //import com.google.firebase.quickstart.database.models.Task;
 //import com.google.firebase.quickstart.database.models.User;
 
@@ -133,15 +130,24 @@ public class CreateNewPostPage extends InterfaceActivity {
     private void writeNewPost(String userId, String username, String title, String body) {
         // Create new task at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
-        String key = mDatabase.child("posts").push().getKey();
-        Task task = new Task(userId, username, title, body);
-        Map<String, Object> postValues = task.toMap();
+        DatabaseReference postRef = mDatabase.child("posts").push();
+        String postKey = postRef.getKey();
 
+
+        Task task = new Task(userId, username, title, body);
+        task.setStatus( "1" );
+
+        postRef.setValue(task);
+        mDatabase.child("group-posts").child(groupKey).child(postKey).setValue(task);
+
+        /*
+        String key = mDatabase.child("posts").push().getKey();
+        Map<String, Object> postValues = task.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/posts/" + key, postValues);
-        //childUpdates.put("/user-posts/" + userId + "/" + key, postValues);
         childUpdates.put("/group-posts/" + groupKey + "/" + key, postValues);
         mDatabase.updateChildren(childUpdates);
+        */
     }
     // [END write_fan_out]
 }

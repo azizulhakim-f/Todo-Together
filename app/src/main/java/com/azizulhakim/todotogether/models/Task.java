@@ -17,7 +17,7 @@ public class Task {
     public String body;
     public Date duedate;
     public Date createdate;
-    public int status;
+    public String status;
     public String handler;
 
     /*
@@ -31,6 +31,10 @@ public class Task {
 
     public Task() {
         // Default constructor required for calls to DataSnapshot.getValue(Task.class)
+    }
+
+    public void setStatus(String status){
+        this.status = status;
     }
 
     public Task(String uid, String author, String title, String body) {

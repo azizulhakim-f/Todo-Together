@@ -35,6 +35,8 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
     private DatabaseReference mPostReference;
     private DatabaseReference mCommentsReference;
     private ValueEventListener mPostListener;
+
+    private String mGroupKey;
     private String mPostKey;
     private CommentAdapter mAdapter;
 
@@ -43,13 +45,18 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
     private TextView mBodyView;
     private EditText mCommentField;
     private Button mCommentButton;
+    private Button mLeftButton;
+    private Button mRightButton;
     private RecyclerView mCommentsRecycler;
+
+    private String taskStatus = "5";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.page__taskdetails);
 
+        mGroupKey = FirebaseUtil.getCurrentGroupID();
         // Get post key from intent
         mPostKey = getIntent().getStringExtra(EXTRA_POST_KEY);
         if (mPostKey == null) {
@@ -57,8 +64,13 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
         }
 
         // Initialize Database
+        /*
         mPostReference = FirebaseDatabase.getInstance().getReference()
                 .child("posts").child(mPostKey);
+        */
+
+        mPostReference = FirebaseDatabase.getInstance().getReference()
+                .child("group-posts").child(mGroupKey).child(mPostKey);
         mCommentsReference = FirebaseDatabase.getInstance().getReference()
                 .child("post-comments").child(mPostKey);
 
@@ -68,9 +80,13 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
         mBodyView = (TextView) findViewById(R.id.post_body);
         mCommentField = (EditText) findViewById(R.id.field_comment_text);
         mCommentButton = (Button) findViewById(R.id.button_post_comment);
+        mLeftButton = (Button) findViewById(R.id.button_left);
+        mRightButton = (Button) findViewById(R.id.button_right);
         mCommentsRecycler = (RecyclerView) findViewById(R.id.recycler_comments);
 
         mCommentButton.setOnClickListener(this);
+        mLeftButton.setOnClickListener(this);
+        mRightButton.setOnClickListener(this);
         mCommentsRecycler.setLayoutManager(new LinearLayoutManager(this));
 
     }
@@ -90,6 +106,21 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
                 mAuthorView.setText(task.author);
                 mTitleView.setText(task.title);
                 mBodyView.setText(task.body);
+
+                String sts = task.status;
+                taskStatus = task.status;
+                if(sts.equals("1")){
+                    mLeftButton.setText("nothing");
+                    mRightButton.setText("Do it!");
+                }
+                else if(sts.equals("2")){
+                    mLeftButton.setText("Don't Do");
+                    mRightButton.setText("Done!");
+                }
+                else if(sts.equals("3")){
+                    mLeftButton.setText("Doing");
+                    mRightButton.setText("Delete");
+                }
                 // [END_EXCLUDE]
             }
 
@@ -112,6 +143,7 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
         // Listen for comments
         mAdapter = new CommentAdapter(this, mCommentsReference);
         mCommentsRecycler.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -133,6 +165,46 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
         if (i == R.id.button_post_comment) {
             postComment();
         }
+        if(i ==  R.id.button_left) {
+            leftButton();
+        }
+        if(i == R.id.button_right){
+            rightButton();
+        }
+    }
+
+    private void leftButton(){
+
+        String newStatus = "5";
+        if(taskStatus.equals("1")){
+            newStatus = "1";
+        }
+        else if(taskStatus.equals("2")){
+            newStatus = "1";
+        }
+        else if(taskStatus.equals("3")){
+            newStatus = "2";
+        }
+
+        mPostReference.child("status").setValue(newStatus);
+        this.onBackPressed();
+    }
+
+    private void rightButton(){
+        String newStatus = "5";
+        if(taskStatus.equals("1")){
+            newStatus = "2";
+        }
+        else if(taskStatus.equals("2")){
+            newStatus = "3";
+        }
+        else if(taskStatus.equals("3")){
+            newStatus = "4";
+        }
+
+        mPostReference.child("status").setValue(newStatus);
+        this.onBackPressed();
+
     }
 
     private void postComment() {

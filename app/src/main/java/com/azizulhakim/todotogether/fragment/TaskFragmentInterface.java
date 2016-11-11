@@ -87,9 +87,9 @@ public abstract class TaskFragmentInterface extends Fragment {
 
                 // Determine if the current user has liked this post and set UI accordingly
                 if (model.stars.containsKey(getUid())) {
-                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
+                    viewHolder.starView.setImageResource(R.drawable.ic_action_toggle_star);
                 } else {
-                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
+                    viewHolder.starView.setImageResource(R.drawable.ic_action_toggle_star_outline);
                 }
 
                 // Bind Task to ViewHolder, setting OnClickListener for the star button
@@ -112,6 +112,7 @@ public abstract class TaskFragmentInterface extends Fragment {
 
     // [START post_stars_transaction]
     private void onStarClicked(DatabaseReference postRef) {
+
         postRef.runTransaction(new Transaction.Handler() {
             @Override
             public Transaction.Result doTransaction(MutableData mutableData) {
@@ -121,6 +122,7 @@ public abstract class TaskFragmentInterface extends Fragment {
                 }
 
                 if (p.stars.containsKey(getUid())) {
+
                     // Unstar the post and remove self from stars
                     p.starCount = p.starCount - 1;
                     p.stars.remove(getUid());

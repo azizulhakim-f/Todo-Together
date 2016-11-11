@@ -4,15 +4,14 @@ import com.azizulhakim.todotogether.FirebaseUtil;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 
-public class TaskofMeFragment extends TaskFragmentInterface {
+public class TaskDoingFragment extends TaskFragmentInterface {
 
-    public TaskofMeFragment() {}
+    public TaskDoingFragment() {}
 
     @Override
     public Query getQuery(DatabaseReference databaseReference) {
-        // All my posts
         String groupkey = FirebaseUtil.getCurrentGroupID();
         return databaseReference.child("group-posts")
-                .child(groupkey);
+                .child(groupkey).orderByChild("status").equalTo("2");
     }
 }

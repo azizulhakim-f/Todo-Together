@@ -12,8 +12,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.azizulhakim.todotogether.fragment.TaskRecentFragment;
-import com.azizulhakim.todotogether.fragment.TaskofMeFragment;
+import com.azizulhakim.todotogether.fragment.TaskDoingFragment;
+import com.azizulhakim.todotogether.fragment.TaskDoneFragment;
+import com.azizulhakim.todotogether.fragment.TaskToDoFragment;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class TaskListPage extends InterfaceActivity {
@@ -42,10 +43,10 @@ public class TaskListPage extends InterfaceActivity {
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
                     //new GroupListFragment(),
-                    new TaskRecentFragment(),
-                    new TaskRecentFragment(),
-                    new TaskofMeFragment()
-                    //new TaskPopularFragment(),
+                    new TaskToDoFragment(),
+                    new TaskDoingFragment(),
+                    new TaskDoneFragment()
+                    //new TaskDoingFragment(),
             };
             private final String[] mFragmentNames = new String[] {
                     //"Groups",
