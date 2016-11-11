@@ -45,22 +45,19 @@ public class TaskListPage extends InterfaceActivity {
 
         DatabaseReference groupRef = FirebaseUtil.getGroupReference();
         DatabaseReference curGroupRef = groupRef.child(groupKey);
-
+        groupNameView = (TextView) findViewById(R.id.group_name_display);
         curGroupRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Group group = dataSnapshot.getValue(Group.class);
                 groupName = group.groupname;
+                groupNameView.setText(groupName);;
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
                 System.out.println("The read failed: " + databaseError.getCode());
             }
         });
-
-        groupNameView = (TextView) findViewById(R.id.group_name_display);
-        groupNameView.setText(groupName);
-
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
