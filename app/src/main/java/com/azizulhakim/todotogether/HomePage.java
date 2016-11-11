@@ -78,7 +78,7 @@ public class HomePage extends InterfaceActivity
         View headerView = navigationView.getHeaderView(0);
         String myname = FirebaseUtil.getMyName();
         String myemail = FirebaseUtil.getMyEmail();
-        Toaster(myname);
+
         mynameview = (TextView)headerView.findViewById(R.id.my_name_display);
         myemailview = (TextView)headerView.findViewById(R.id.my_email_display);
         mynameview.setText( myname );

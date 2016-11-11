@@ -11,11 +11,17 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.azizulhakim.todotogether.fragment.TaskDoingFragment;
 import com.azizulhakim.todotogether.fragment.TaskDoneFragment;
 import com.azizulhakim.todotogether.fragment.TaskToDoFragment;
+import com.azizulhakim.todotogether.models.Group;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
 
 public class TaskListPage extends InterfaceActivity {
 
@@ -23,6 +29,8 @@ public class TaskListPage extends InterfaceActivity {
 
     public static final String GROUP_KEY = "post_key";
     private String groupKey;
+    private String groupName;
+    private TextView groupNameView;
 
     private FragmentPagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
@@ -35,25 +43,36 @@ public class TaskListPage extends InterfaceActivity {
         groupKey = getIntent().getStringExtra(GROUP_KEY);
         FirebaseUtil.setCurrentGroup(groupKey);
 
-        findViewById(R.id.fab_navigation).setVisibility(View.INVISIBLE);
-        findViewById(R.id.fab_new_post).setVisibility(View.INVISIBLE);
-        findViewById(R.id.fab_new_group).setVisibility(View.INVISIBLE);
+        DatabaseReference groupRef = FirebaseUtil.getGroupReference();
+        DatabaseReference curGroupRef = groupRef.child(groupKey);
+
+        curGroupRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Group group = dataSnapshot.getValue(Group.class);
+                groupName = group.groupname;
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getCode());
+            }
+        });
+
+        groupNameView = (TextView) findViewById(R.id.group_name_display);
+        groupNameView.setText(groupName);
+
 
         // Create the adapter that will return a fragment for each section
         mPagerAdapter = new FragmentPagerAdapter(getSupportFragmentManager()) {
             private final Fragment[] mFragments = new Fragment[] {
-                    //new GroupListFragment(),
                     new TaskToDoFragment(),
                     new TaskDoingFragment(),
                     new TaskDoneFragment()
-                    //new TaskDoingFragment(),
             };
             private final String[] mFragmentNames = new String[] {
-                    //"Groups",
                     "To Do",
                     "Doing",
                     "Done"
-                   // "My Top Tasks"
             };
             @Override
             public Fragment getItem(int position) {
@@ -68,49 +87,28 @@ public class TaskListPage extends InterfaceActivity {
                 return mFragmentNames[position];
             }
         };
+
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mPagerAdapter);
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
-        // Button launches CreateNewPostPage
-        findViewById(R.id.fab_container).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int visible = findViewById(R.id.fab_navigation).getVisibility();
-                if(visible==View.INVISIBLE) {
-                    findViewById(R.id.fab_navigation).setVisibility(View.VISIBLE);
-                    findViewById(R.id.fab_new_post).setVisibility(View.VISIBLE);
-                    findViewById(R.id.fab_new_group).setVisibility(View.VISIBLE);
-                }
-                else {
-                    findViewById(R.id.fab_navigation).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.fab_new_post).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.fab_new_group).setVisibility(View.INVISIBLE);
-                }
-            }
-        });
-        findViewById(R.id.fab_navigation).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //startActivity(new Intent(TaskListPage.this, NavigationPage.class));
 
-            }
-        });
-        findViewById(R.id.fab_new_post).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fab_add_task).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(TaskListPage.this, CreateNewPostPage.class));
             }
         });
-        findViewById(R.id.fab_new_group).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.fab_group_details).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "group button clicked.");
                 startActivity(new Intent(TaskListPage.this, GroupDetailsPage.class));
             }
         });
+
     }
 
     public void onBackPressed() {
