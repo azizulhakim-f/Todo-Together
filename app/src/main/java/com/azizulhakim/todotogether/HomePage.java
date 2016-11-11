@@ -1,7 +1,10 @@
 package com.azizulhakim.todotogether;
 
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -16,6 +19,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.azizulhakim.todotogether.fragment.GroupMyFragment;
+
+import java.util.Calendar;
 
 public class HomePage extends InterfaceActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -135,15 +140,20 @@ public class HomePage extends InterfaceActivity
             //startActivity(new Intent(this, GroupListPage.class));
             Toaster("Groups");
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
         }
+        else if (id == R.id.nav_calendar) {
+              startActivity(new Intent(this, CalendarPage.class));
+            } else if (id == R.id.nav_manage) {
+            } else if (id == R.id.nav_share) {
+
+            } else if (id == R.id.nav_send) {
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                String chooserTitle = getString(R.string.chooser);
+                Intent chose = Intent.createChooser(intent, chooserTitle);
+                startActivity(chose);
+
+            }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

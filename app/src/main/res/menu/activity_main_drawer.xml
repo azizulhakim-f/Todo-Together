@@ -11,9 +11,9 @@
             android:icon="@drawable/ic_menu_gallery"
             android:title="Groups" />
         <item
-            android:id="@+id/nav_slideshow"
+            android:id="@+id/nav_calendar"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="Not yet Added" />
+            android:title="Calendar" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
