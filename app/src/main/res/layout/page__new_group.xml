@@ -23,7 +23,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginTop="5dp"
-        android:hint="About this Project..."
+        android:hint="Project Description"
         android:inputType="textMultiLine"
         android:maxLines="10"
         android:scrollHorizontally="false" />

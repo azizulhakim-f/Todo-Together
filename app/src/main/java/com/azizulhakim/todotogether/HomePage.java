@@ -1,10 +1,7 @@
 package com.azizulhakim.todotogether;
 
-import android.content.ContentUris;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -19,8 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.azizulhakim.todotogether.fragment.GroupMyFragment;
-
-import java.util.Calendar;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class HomePage extends InterfaceActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -106,7 +102,7 @@ public class HomePage extends InterfaceActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -115,13 +111,13 @@ public class HomePage extends InterfaceActivity
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        int i = item.getItemId();
+        if (i == R.id.action_logout) {
+            FirebaseAuth.getInstance().signOut();
+            startActivity(new Intent(this, LogInPage.class));
+            finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -131,11 +127,11 @@ public class HomePage extends InterfaceActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_add_project) {
             ///create new group
             startActivity(new Intent(this, CreateNewGroupPage.class));
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_projects) {
             ///groups
             //startActivity(new Intent(this, GroupListPage.class));
             Toaster("Groups");
@@ -143,7 +139,7 @@ public class HomePage extends InterfaceActivity
         }
         else if (id == R.id.nav_calendar) {
               startActivity(new Intent(this, CalendarPage.class));
-            } else if (id == R.id.nav_manage) {
+            } else if (id == R.id.nav_settings) {
             } else if (id == R.id.nav_share) {
 
             } else if (id == R.id.nav_send) {
