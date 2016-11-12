@@ -92,75 +92,19 @@ public abstract class GroupChooseInterface extends Fragment {
                     }
                 });
 
-                // Determine if the current user has liked this post and set UI accordingly
-
-                if (model.stars.containsKey(getUid())) {
-                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_24);
-                } else {
-                    viewHolder.starView.setImageResource(R.drawable.ic_toggle_star_outline_24);
-                }
-
-
 
                 // Bind Task to ViewHolder, setting OnClickListener for the star button
                 viewHolder.bindToPost(model, new View.OnClickListener() {
                     @Override
-                    public void onClick(View starView) {
-                        // Need to write to both places the post is stored
-                        DatabaseReference globalPostRef = mDatabase.child("groups").child(postRef.getKey());
-                        //DatabaseReference userPostRef = mDatabase.child("user-groups").child(model.uid).child(postRef.getKey());
+                    public void onClick(View v) {
 
-                        // Run two transactions
-                        onStarClicked(globalPostRef);
-                        //onStarClicked(userPostRef);
                     }
                 });
-
-
-
             }
-
         };
         mRecycler.setAdapter(mAdapter);
     }
 
-    // [START post_stars_transaction]
-    private void onStarClicked(DatabaseReference postRef) {
-        postRef.runTransaction(new Transaction.Handler() {
-            @Override
-            public Transaction.Result doTransaction(MutableData mutableData) {
-                Group p = mutableData.getValue(Group.class);
-                if (p == null) {
-                    return Transaction.success(mutableData);
-                }
-
-
-
-                if (p.stars.containsKey(getUid())) {
-                    // Unstar the post and remove self from stars
-                    p.starCount = p.starCount - 1;
-                    p.stars.remove(getUid());
-                } else {
-                    // Star the post and add self to stars
-                    p.starCount = p.starCount + 1;
-                    p.stars.put(getUid(), true);
-                }
-
-
-                // Set value and report transaction success
-                mutableData.setValue(p);
-                return Transaction.success(mutableData);
-            }
-
-            @Override
-            public void onComplete(DatabaseError databaseError, boolean b,
-                                   DataSnapshot dataSnapshot) {
-                // Transaction completed
-                Log.d(TAG, "postTransaction:onComplete:" + databaseError);
-            }
-        });
-    }
-    // [END post_stars_transaction]
 
     @Override
     public void onDestroy() {

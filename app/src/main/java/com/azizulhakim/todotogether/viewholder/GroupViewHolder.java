@@ -21,16 +21,16 @@ public class GroupViewHolder extends RecyclerView.ViewHolder {
 
         titleView = (TextView) itemView.findViewById(R.id.group_name_fragment);
         //authorView = (TextView) itemView.findViewById(R.id.post_author);
-        starView = (ImageView) itemView.findViewById(R.id.star);
-        numStarsView = (TextView) itemView.findViewById(R.id.post_num_stars);
+        //starView = (ImageView) itemView.findViewById(R.id.star);
+        //numStarsView = (TextView) itemView.findViewById(R.id.post_num_stars);
         bodyView = (TextView) itemView.findViewById(R.id.group_body);
     }
 
     public void bindToPost(Group group, View.OnClickListener starClickListener) {
         titleView.setText(group.groupname);
         //authorView.setText(group.groupname);
-        numStarsView.setText(String.valueOf(group.starCount));
+        //numStarsView.setText(String.valueOf(group.starCount));
         bodyView.setText(group.about);
-        starView.setOnClickListener(starClickListener);
+        //starView.setOnClickListener(starClickListener);
     }
 }

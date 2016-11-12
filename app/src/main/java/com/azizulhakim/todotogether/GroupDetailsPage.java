@@ -66,9 +66,9 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
                 .child("group-comments").child(mPostKey);
 
         // Initialize Views
-        mAuthorView = (TextView) findViewById(R.id.post_author);
-        mTitleView = (TextView) findViewById(R.id.post_title);
-        mBodyView = (TextView) findViewById(R.id.post_body);
+       // mAuthorView = (TextView) findViewById(R.id.post_author);
+        mTitleView = (TextView) findViewById(R.id.group_name_fragment);
+        mBodyView = (TextView) findViewById(R.id.group_body);
         mCommentField = (EditText) findViewById(R.id.field_comment_text);
         mCommentButton = (Button) findViewById(R.id.button_post_comment);
         mCommentsRecycler = (RecyclerView) findViewById(R.id.recycler_comments);
@@ -98,7 +98,7 @@ public class GroupDetailsPage extends InterfaceActivity implements View.OnClickL
                 // Get Task object and use the values to update the UI
                 Group group = dataSnapshot.getValue(Group.class);
                 // [START_EXCLUDE]
-                mAuthorView.setText(group.groupname);
+                //mAuthorView.setText(group.groupname);
                 mTitleView.setText(group.groupname);
                 mBodyView.setText(group.about);
                 // [END_EXCLUDE]
