@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.azizulhakim.todotogether.FirebaseUtil;
 import com.azizulhakim.todotogether.R;
@@ -36,6 +37,7 @@ public abstract class TaskFragmentInterface extends Fragment {
     private FirebaseRecyclerAdapter<Task, PostViewHolder> mAdapter;
     private RecyclerView mRecycler;
     private LinearLayoutManager mManager;
+    private String mpostKey;
 
     public TaskFragmentInterface() {}
 
@@ -75,6 +77,7 @@ public abstract class TaskFragmentInterface extends Fragment {
 
                 // Set click listener for the whole post view
                 final String postKey = postRef.getKey();
+                mpostKey = postKey;
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -97,11 +100,8 @@ public abstract class TaskFragmentInterface extends Fragment {
                     @Override
                     public void onClick(View starView) {
                         // Need to write to both places the post is stored
-                        DatabaseReference globalPostRef = mDatabase.child("posts").child(postRef.getKey());
-                        DatabaseReference userPostRef = mDatabase.child("user-posts").child(model.uid).child(postRef.getKey());
-
-                        // Run two transactions
-                        onStarClicked(globalPostRef);
+                        String groupkey = FirebaseUtil.getCurrentGroupID();
+                        DatabaseReference userPostRef = mDatabase.child("group-posts").child(groupkey).child(postRef.getKey());
                         onStarClicked(userPostRef);
                     }
                 });
@@ -109,6 +109,8 @@ public abstract class TaskFragmentInterface extends Fragment {
         };
         mRecycler.setAdapter(mAdapter);
     }
+
+
 
     // [START post_stars_transaction]
     private void onStarClicked(DatabaseReference postRef) {

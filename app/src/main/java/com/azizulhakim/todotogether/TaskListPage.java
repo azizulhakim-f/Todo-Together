@@ -45,7 +45,7 @@ public class TaskListPage extends InterfaceActivity {
 
         DatabaseReference groupRef = FirebaseUtil.getGroupReference();
         DatabaseReference curGroupRef = groupRef.child(groupKey);
-        groupNameView = (TextView) findViewById(R.id.group_name_display);
+        groupNameView = (TextView) findViewById(R.id.group_name_fragment);
         curGroupRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
