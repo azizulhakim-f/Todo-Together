@@ -19,6 +19,9 @@ public class Task {
     public Date createdate;
     public String status;
     public String handler;
+    public String addedby;
+    public String doingby;
+    public String doneby;
 
     /*
     1 = TO-DO
@@ -40,8 +43,17 @@ public class Task {
     public Task(String uid, String author, String title, String body) {
         this.uid = uid;
         this.author = author;
+        this.addedby=author;
         this.title = title;
         this.body = body;
+    }
+
+    public void addDoingBy(String name){
+        doingby = name;
+    }
+
+    public void addDoneBy(String name){
+        doneby = name;
     }
 
     // [START post_to_map]

@@ -42,6 +42,7 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
 
     private TextView mAuthorView;
     private TextView mTitleView;
+    private TextView mAuthorStatus;
     private TextView mBodyView;
     private EditText mCommentField;
     private Button mCommentButton;
@@ -76,6 +77,7 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
 
         // Initialize Views
         mAuthorView = (TextView) findViewById(R.id.post_author);
+        mAuthorStatus = (TextView) findViewById(R.id.author_status);
         mTitleView = (TextView) findViewById(R.id.post_title);
         mBodyView = (TextView) findViewById(R.id.post_body);
         mCommentField = (EditText) findViewById(R.id.field_comment_text);
@@ -110,14 +112,20 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
                 String sts = task.status;
                 taskStatus = task.status;
                 if(sts.equals("1")){
+                    mAuthorView.setText(task.addedby);
+                    mAuthorStatus.setText(" Added it");
                     mLeftButton.setText("nothing");
                     mRightButton.setText("Do it!");
                 }
                 else if(sts.equals("2")){
+                    mAuthorView.setText(task.doingby);
+                    mAuthorStatus.setText(" Doing it");
                     mLeftButton.setText("Don't Do");
                     mRightButton.setText("Done!");
                 }
                 else if(sts.equals("3")){
+                    mAuthorView.setText(task.doneby);
+                    mAuthorStatus.setText(" Completed it");
                     mLeftButton.setText("Doing");
                     mRightButton.setText("Delete");
                 }
@@ -192,11 +200,14 @@ public class TaskDetailsPage extends InterfaceActivity implements View.OnClickLi
 
     private void rightButton(){
         String newStatus = "5";
+        String myname = FirebaseUtil.myname;
         if(taskStatus.equals("1")){
             newStatus = "2";
+            mPostReference.child("doingby").setValue(myname);
         }
         else if(taskStatus.equals("2")){
             newStatus = "3";
+            mPostReference.child("doneby").setValue(myname);
         }
         else if(taskStatus.equals("3")){
             newStatus = "4";
