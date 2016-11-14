@@ -132,24 +132,30 @@ public class HomePage extends InterfaceActivity
             startActivity(new Intent(this, CreateNewGroupPage.class));
 
         } else if (id == R.id.nav_projects) {
-            ///groups
-            //startActivity(new Intent(this, GroupListPage.class));
-            Toaster("Groups");
-
+            Toaster("Projects");
         }
         else if (id == R.id.nav_calendar) {
               startActivity(new Intent(this, CalendarPage.class));
-            } else if (id == R.id.nav_settings) {
-            } else if (id == R.id.nav_share) {
-
-            } else if (id == R.id.nav_send) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                String chooserTitle = getString(R.string.chooser);
-                Intent chose = Intent.createChooser(intent, chooserTitle);
-                startActivity(chose);
-
             }
+        else if (id == R.id.nav_settings) {
+            startActivity(new Intent(this, AboutPage.class));
+        }
+        else if (id == R.id.nav_share) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            //String shareBody = "Here is the share content body";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,"");
+            startActivity(Intent.createChooser(sharingIntent, "Share via"));
+
+
+        }
+        else if (id == R.id.nav_send) {
+            Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
+            sharingIntent.setType("text/plain");
+            startActivity(Intent.createChooser(sharingIntent, "Send Message via"));
+
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

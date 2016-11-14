@@ -28,6 +28,8 @@
         <activity android:name=".TaskDetailsPage" />
         <activity android:name=".GroupDetailsPage" />
         <activity android:name=".CalendarPage"/>
+        <activity android:name=".TimeSetPage"/>
+        <activity android:name=".AboutPage"/>
 
         <activity
             android:name=".HomePage"
