@@ -162,5 +162,4 @@ public abstract class TaskFragmentInterface extends Fragment {
     }
 
     public abstract Query getQuery(DatabaseReference databaseReference);
-
 }

@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class CreateNewGroupPage extends InterfaceActivity {
+public class CreateNewGroupPage extends InterfaceActivity{
 
     private static final String TAG = "CreateNewGroupPage";
     private static final String REQUIRED = "Required";
@@ -47,12 +47,11 @@ public class CreateNewGroupPage extends InterfaceActivity {
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                submitPost();
+                submitGruop();
             }
         });
     }
-
-    private void submitPost() {
+    public void submitGruop() {
         final String title = mTitleField.getText().toString();
         final String body = mBodyField.getText().toString();
 

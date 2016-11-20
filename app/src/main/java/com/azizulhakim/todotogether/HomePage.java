@@ -129,7 +129,7 @@ public class HomePage extends InterfaceActivity
 
         if (id == R.id.nav_add_project) {
             ///create new group
-            startActivity(new Intent(this, CreateNewGroupPage.class));
+            startActivity(new Intent(this, CreateNewPostPage.class));
 
         } else if (id == R.id.nav_projects) {
             Toaster("Projects");
@@ -153,8 +153,10 @@ public class HomePage extends InterfaceActivity
         else if (id == R.id.nav_send) {
             Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
             sharingIntent.setType("text/plain");
-            startActivity(Intent.createChooser(sharingIntent, "Send Message via"));
-
+            //String shareBody = "Here is the share content body";
+            sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "");
+            sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT,"");
+            startActivity(Intent.createChooser(sharingIntent, "Send Via"));
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

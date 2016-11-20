@@ -25,10 +25,11 @@ import static com.azizulhakim.todotogether.CalendarPage.result_date;
 import static com.azizulhakim.todotogether.TimeSetPage.result_time;
 
 
+
 //import com.google.firebase.quickstart.database.models.Task;
 //import com.google.firebase.quickstart.database.models.User;
 
-public class CreateNewPostPage extends InterfaceActivity {
+public class CreateNewPostPage extends InterfaceActivity{
 
     private static final String TAG = "CreateNewPostPage";
     private static final String REQUIRED = "Required";
@@ -59,11 +60,11 @@ public class CreateNewPostPage extends InterfaceActivity {
 
         mTitleField = (EditText) findViewById(R.id.field_title);
         mBodyField = (EditText) findViewById(R.id.field_body);
-        addTime=(Button)findViewById(R.id.deadlinetime);
+        /*addTime=(Button)findViewById(R.id.deadlinetime);
         addTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CreateNewPostPage.this, TimeSetPage.class));
+                //startActivity(new Intent(CreateNewPostPage.this, TimeSetPage.class));
 
             }
         });
@@ -71,10 +72,11 @@ public class CreateNewPostPage extends InterfaceActivity {
         addDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CreateNewPostPage.this, CalendarPage.class));
+               // startActivity(new Intent(CreateNewPostPage.this, CalendarPage.class));
 
             }
         });
+        */
         mSubmitButton = (FloatingActionButton) findViewById(R.id.fab_submit_post);
 
         mSubmitButton.setOnClickListener(new View.OnClickListener() {
@@ -85,7 +87,7 @@ public class CreateNewPostPage extends InterfaceActivity {
         });
     }
 
-    private void submitPost() {
+    public void submitPost(){
         final String title = mTitleField.getText().toString();
         final String body = mBodyField.getText().toString();
 
